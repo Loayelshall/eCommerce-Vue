@@ -27,7 +27,7 @@ const routes = [
     component: Account,
     meta: {
       requireLogin: true,
-    }
+    },
   },
   {
     path: "/about",
