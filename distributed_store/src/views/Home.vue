@@ -25,9 +25,10 @@
           <p class="is-size-6 has-text-grey">${{ product.price }}</p>
           <router-link
             v-bind:to="product.get_absolute_url"
-            class="button is-dark mt-4">
+            class="button is-dark mt-4"
+          >
             View
-            </router-link>
+          </router-link>
         </div>
       </div>
     </div>
@@ -51,10 +52,10 @@ export default {
     getLatestProducts() {
       axios
         .get("/api/v1/latest-products/")
-        .then(response => {
-          this.latestProducts = response.data
+        .then((response) => {
+          this.latestProducts = response.data;
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },

@@ -38,10 +38,20 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <a class="button is-primary" href="/register">
-                <strong>Register</strong>
-              </a>
-              <a class="button is-light" href="/login">Login</a>
+              <template v-if="$store.state.isAuthenticated">
+                <router-link to="/account" class="button is-dark">
+                  My Account
+                </router-link>
+                <form @submit="logout">
+                  <button class="button is-light">Logout</button>
+                </form>
+              </template>
+              <template v-else>
+                <a class="button is-primary" href="/register">
+                  <strong>Register</strong>
+                </a>
+                <a class="button is-light" href="/login">Login</a>
+              </template>
             </div>
           </div>
         </div>
@@ -56,6 +66,30 @@
     </footer>
   </div>
 </template>
+
+<script>
+import axios from "axios";
+export default {
+  data() {
+    return {};
+  },
+  beforeCreate() {
+    this.$store.commit("initializeStore");
+    const token = this.$store.state.token;
+    if (token) {
+      axios.defaults.headers.common["Authorization"] = "Token " + token;
+    } else {
+      axios.defaults.headers.common["Authorization"] = "";
+    }
+  },
+  methods: {
+    logout() {
+      axios.defaults.headers.common["Authorization"] = "";
+      localStorage.removeItem("token");
+    },
+  },
+};
+</script>
 
 <style lang="scss">
 @import "../node_modules/bulma";
