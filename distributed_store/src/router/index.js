@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import Product from "../views/Product.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
+import Account from "../views/Account.vue";
 const routes = [
   {
     path: "/",
@@ -19,6 +20,14 @@ const routes = [
     path: "/login",
     name: "Login",
     component: Login,
+  },
+  {
+    path: "/account",
+    name: "Account",
+    component: Account,
+    meta: {
+      requireLogin: true,
+    }
   },
   {
     path: "/about",
