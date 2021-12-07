@@ -5,6 +5,7 @@ import Product from "../views/Product.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import Account from "../views/Account.vue";
+import Checkout from "../views/Checkout.vue";
 const routes = [
   {
     path: "/",
@@ -25,6 +26,14 @@ const routes = [
     path: "/account",
     name: "Account",
     component: Account,
+    meta: {
+      requireLogin: true,
+    },
+  },
+  {
+    path: "/checkout",
+    name: "Checkout",
+    component: Checkout,
     meta: {
       requireLogin: true,
     },
