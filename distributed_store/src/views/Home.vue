@@ -50,6 +50,7 @@ export default {
               i
             ].url = `/products/${this.latestProducts[i].id}/`;
           }
+          console.log(response);
         })
         .catch((error) => {
           console.log(error);

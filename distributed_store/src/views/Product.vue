@@ -2,7 +2,7 @@
   <div class="page-product">
     <div class="columns is-9">
       <figure class="image mb-6">
-        <img v-bind:src="product.get_image" />
+        <img v-bind:src="product.image_main" />
       </figure>
       <h1 class="title">{{ product.name }}</h1>
       <p>{{ product.description }}</p>

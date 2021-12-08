@@ -20,7 +20,11 @@
         </a>
       </div>
 
-      <div class="navbar-menu" id="navbar-menu" v-bind:class="{ 'is-active': showMobileMenu }">
+      <div
+        class="navbar-menu"
+        id="navbar-menu"
+        v-bind:class="{ 'is-active': showMobileMenu }"
+      >
         <div class="navbar-start">
           <div class="navbar-item">
             <form method="get" action="/search">
@@ -64,29 +68,29 @@
             </div>
           </div>
         </div>
-          <div class="navbar-end">
-            <div class="navbar-item">
-              <div class="buttons">
-                <template v-if="$store.state.isAuthenticated">
-                  <router-link to="/account" class="button is-dark">
-                    My Account
-                  </router-link>
-                  <form @submit="logout">
-                    <button class="button is-light">Logout</button>
-                  </form>
-                  <router-link to="/cart" class="button is-success ml-2">
-                    <span>Cart ({{ cartTotalLength }}) </span>
-                  </router-link>
-                </template>
-                <template v-else>
-                  <a class="button is-primary" href="/register">
-                    <strong>Register</strong>
-                  </a>
-                  <a class="button is-light" href="/login">Login</a>
-                </template>
-              </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <template v-if="$store.state.isAuthenticated">
+                <router-link to="/account" class="button is-dark">
+                  My Account
+                </router-link>
+                <form @submit="logout">
+                  <button class="button is-light">Logout</button>
+                </form>
+                <router-link to="/cart" class="button is-success ml-2">
+                  <span>Cart ({{ cartTotalLength }}) </span>
+                </router-link>
+              </template>
+              <template v-else>
+                <a class="button is-primary" href="/register">
+                  <strong>Register</strong>
+                </a>
+                <a class="button is-light" href="/login">Login</a>
+              </template>
             </div>
           </div>
+        </div>
       </div>
     </nav>
 

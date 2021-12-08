@@ -10,7 +10,7 @@
       <div class="column is-12">
         <h2 class="subtitle">Add New Products:</h2>
         <div class="box mb-4">
-          <form @submit.prevent="submitNewItem">
+          <form enctype="multipart/form-data" @submit.prevent="submitNewItem">
             <div class="column is-6 field">
               <label>Category</label>
               <div class="control">
@@ -72,6 +72,55 @@
                 <label> No</label>
               </div>
             </div>
+
+            <!-- <div class="column is-6 field">
+              <div class="control">
+                <div class="file is-info has-name">
+                  <label class="file-label">
+                    <input
+                      accept="image/*"
+                      id="photo"
+                      class="file-input"
+                      type="file"
+                      @change="changeName('photo')"
+                    />
+                    <span class="file-cta">
+                      <span class="file-icon">
+                        <i class="fas fa-upload"></i>
+                      </span>
+                      <span class="file-label"> Upload Photo </span>
+                    </span>
+                    <span class="file-name">
+                      <label id="photolabel">Upload</label>
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <br />
+              <div class="control">
+                <div class="file is-info has-name">
+                  <label class="file-label">
+                    <input
+                      accept="image/*"
+                      id="Thumbnail"
+                      class="file-input"
+                      type="file"
+                      @change="changeName('Thumbnail')"
+                    />
+                    <span class="file-cta">
+                      <span class="file-icon">
+                        <i class="fas fa-upload"></i>
+                      </span>
+                      <span class="file-label"> Upload Thumbnail </span>
+                    </span>
+                    <span class="file-name">
+                      <label id="Thumbnaillabel">Upload</label>
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div> -->
+
             <div class="notification is-danger" v-if="errorsItem.length">
               <p v-for="error in errorsItem" v-bind:key="error">{{ error }}</p>
             </div>
@@ -205,6 +254,8 @@ export default {
             description: this.itemDescription,
             no_of_pieces: this.itemAmount,
             on_sale: this.itemOnSale,
+            image_main: "http://127.0.0.1:8000/media/uploads/download.jpg",
+            image_thumbnail: "http://127.0.0.1:8000/media/uploads/download.jpg",
           })
           .then((response) => {
             console.log(this.itemOnSale);
@@ -259,6 +310,11 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    changeName(id) {
+      let x = document.getElementById(id).value;
+      let y = x.split("\\")[2];
+      document.getElementById(id + "label").innerHTML = y;
     },
   },
 };
