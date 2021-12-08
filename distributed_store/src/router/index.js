@@ -6,6 +6,7 @@ import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import Account from "../views/Account.vue";
 import Checkout from "../views/Checkout.vue";
+import PersonalStore from "../views/PersonalStore.vue";
 const routes = [
   {
     path: "/",
@@ -39,6 +40,14 @@ const routes = [
     },
   },
   {
+    path: "/personalStore",
+    name: "PersonalStore",
+    component: PersonalStore,
+    meta: {
+      requireLogin: true,
+    },
+  },
+  {
     path: "/about",
     name: "About",
     // route level code-splitting
@@ -48,9 +57,12 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
   {
-    path: "/:category_slug/:product_slug",
+    path: "/products/:product_slug",
     name: "Product",
     component: Product,
+    meta: {
+      requireLogin: true,
+    },
   },
 ];
 

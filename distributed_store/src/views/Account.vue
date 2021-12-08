@@ -7,7 +7,7 @@
 
       <hr />
       <div class="column is-12">
-        <h2 class="title">Information</h2>
+        <h2 class="subtitle">Information</h2>
         <div class="box mb-4">
           <h3 class="is-size-4 mb-6">Username: {{ username }}</h3>
           <h3 class="is-size-4 mb-6">Cash: ${{ cash }}</h3>

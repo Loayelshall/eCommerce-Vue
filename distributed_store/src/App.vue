@@ -21,6 +21,11 @@
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
           <a class="navbar-item"> Documentation </a>
+          <template v-if="$store.state.isAuthenticated">
+            <router-link to="/personalStore" class="navbar-item">
+              My Store
+            </router-link>
+          </template>
 
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link"> More </a>

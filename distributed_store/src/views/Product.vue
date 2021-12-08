@@ -44,7 +44,7 @@ export default {
       console.log(product_slug);
 
       axios
-        .get(`/api/v1/products/${category_slug}/${product_slug}`)
+        .get(`/api/v1/products/${product_slug}`)
         .then((response) => {
           this.product = response.data;
         })
