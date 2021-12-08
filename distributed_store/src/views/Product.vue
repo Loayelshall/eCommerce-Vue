@@ -39,17 +39,14 @@ export default {
   },
   methods: {
     async getProduct() {
-      this.$store.commit('setIsLoading',true)
-      const category_slug = this.$route.params.category_slug;
+      //this.$store.commit('setIsLoading',true)
       const product_slug = this.$route.params.product_slug;
-      console.log(category_slug);
-      console.log(product_slug);
 
       axios
         .get(`/api/v1/products/${product_slug}`)
         .then((response) => {
           this.product = response.data;
-          document.title = this.product.name + ' | eCommerce'
+          document.title = this.product.name + ' | E-Commerce'
         })
         .catch((error) => {
           console.log(error);
@@ -73,11 +70,6 @@ export default {
         duration:2000,
         position:"bottom-right"
       })
-
-
-
-
-
     }
   },
 };

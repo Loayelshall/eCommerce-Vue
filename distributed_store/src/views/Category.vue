@@ -42,7 +42,7 @@ export default {
     methods: {
         async getCategory() {
             const categorySlug = this.$route.params.category_slug
-            this.$store.commit('setIsLoading', true)
+            //this.$store.commit('setIsLoading', true)
             axios
                 .get(`/api/v1/products/${categorySlug}/`)
                 .then(response => {
@@ -60,7 +60,7 @@ export default {
                         position: 'bottom-right',
                     })
                 })
-            this.$store.commit('setIsLoading', false)
+            //this.$store.commit('setIsLoading', false)
         }
     }
 }

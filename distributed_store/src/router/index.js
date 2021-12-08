@@ -8,6 +8,7 @@ import Register from "../views/Register.vue";
 import Account from "../views/Account.vue";
 import Checkout from "../views/Checkout.vue";
 import Search from "../views/Search";
+import Cart from "../views/Cart.vue"
 import PersonalStore from "../views/PersonalStore.vue";
 const routes = [
   {
@@ -34,7 +35,7 @@ const routes = [
     },
   },
   {
-    path: "/checkout",
+    path: "/Cart/checkout",
     name: "Checkout",
     component: Checkout,
     meta: {
@@ -62,6 +63,11 @@ const routes = [
     path: "/search",
     name: "Search",
     component: Search,
+  },
+  {
+    path: "/cart",
+    name: "Cart",
+    component: Cart,
   },
   {
     path: "/products/:product_slug",

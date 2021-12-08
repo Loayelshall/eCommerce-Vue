@@ -44,7 +44,7 @@ export default {
     },
     methods: {
         performSearch() {
-            this.$store.commit('setIsLoading', true)
+            //this.$store.commit('setIsLoading', true)
 
             axios
                 .post('/api/v1/products/search/', {'query': this.query})
@@ -55,7 +55,7 @@ export default {
                     console.log(error)
                 })
 
-            this.$store.commit('setIsLoading', false)
+            //this.$store.commit('setIsLoading', false)
         }
     }
 }
