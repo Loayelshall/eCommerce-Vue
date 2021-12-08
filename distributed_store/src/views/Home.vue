@@ -42,9 +42,7 @@ export default {
         .then((response) => {
           this.latestProducts = response.data;
           for (let i = 0; i < this.latestProducts.length; i++) {
-            this.latestProducts[
-              i
-            ].url = `/products/${this.latestProducts[i].id}/`;
+            this.latestProducts[i].url = `/products/${this.latestProducts[i].id}/`;
           }
         })
         .catch((error) => {

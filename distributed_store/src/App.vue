@@ -75,8 +75,7 @@
                 <form @submit="logout">
                   <button class="button is-light">Logout</button>
                 </form>
-                <router-link to="/cart" class="button is-success">
-                  <span class="icon"><i class="fas fa-shopping-cart"></i></span>
+                <router-link to="/cart" class="button is-success ml-2">                  
                   <span>Cart ({{cartTotalLength}}) </span>
                 </router-link>
               </template>

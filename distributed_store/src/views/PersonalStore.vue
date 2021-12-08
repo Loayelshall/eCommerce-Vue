@@ -8,29 +8,7 @@
       <hr />
 
       <div class="column is-12">
-        <h2 class="subtitle">Add New Category:</h2>
-        <div class="box mb-4">
-          <form @submit.prevent="submitNewCategory">
-            <div class="column is-6 field">
-              <label>Category Name</label>
-              <div class="control">
-                <input type="text" class="input" v-model="categoryName" />
-              </div>
-            </div>
-            <div class="notification is-danger" v-if="errorCat.length">
-              <p v-for="error in errorCat" v-bind:key="error">{{ error }}</p>
-            </div>
-            <div class="column is-4 field">
-              <div class="control">
-                <button class="button is-dark">Add</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-
-      <div class="column is-12">
-        <h2 class="subtitle">Add New Items:</h2>
+        <h2 class="subtitle">Add New Products:</h2>
         <div class="box mb-4">
           <form @submit.prevent="submitNewItem">
             <div class="column is-6 field">
@@ -51,13 +29,19 @@
               </div>
             </div>
             <div class="column is-6 field">
-              <label>Item Name</label>
+              <label>Product Name</label>
               <div class="control">
                 <input type="text" class="input" v-model="itemName" />
               </div>
             </div>
             <div class="column is-6 field">
-              <label>Item Price</label>
+              <label>Product Description</label>
+              <div class="control">
+                <input type="text" class="input" v-model="itemDescription" />
+              </div>
+            </div>
+            <div class="column is-6 field">
+              <label>Product Price</label>
               <div class="control">
                 <input
                   type="number"
@@ -65,6 +49,27 @@
                   v-model="itemPrice"
                   min="0"
                 />
+              </div>
+            </div>
+            <div class="column is-6 field">
+              <label>Product Amount</label>
+              <div class="control">
+                <input
+                  type="number"
+                  class="input"
+                  v-model="itemAmount"
+                  min="0"
+                />
+              </div>
+            </div>
+            <div class="column is-6 field">
+              <label>Public</label>
+              <div class="control">                
+                <input type="radio" value="1" v-model="itemOnSale">
+                <label> Yes</label>
+                <br>
+                <input type="radio" value="0" v-model="itemOnSale">
+                <label> No</label>
               </div>
             </div>
             <div class="notification is-danger" v-if="errorsItem.length">
@@ -81,7 +86,31 @@
       <hr />
 
       <div class="column is-12">
-        <h2 class="subtitle">My Items</h2>
+        <h2 class="subtitle">My Products</h2>
+        <div class="box mb-4">            
+            <table class="table is-fullwidth">
+            <thead>
+                <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Public</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="product in products" v-bind:key="product.id">
+                <td>{{ product.name }}</td>
+                <td>{{ product.price }}</td>    
+                <td>{{ product.no_of_pieces }}</td>    
+                <td>{{ product.description }}</td>    
+                <td>{{ product.category }}</td> 
+                <td>{{ product.on_sale }}</td>                
+                </tr>
+            </tbody>
+            </table>
+        </div>
       </div>
     </div>
   </div>
@@ -89,6 +118,7 @@
 
 <script>
 import axios from "axios";
+import { toast } from "bulma-toast";
 
 export default {
   name: "PersonalStore",
@@ -96,16 +126,20 @@ export default {
     return {
       itemName: "",
       itemPrice: 0,
-      itemCategory: "",
+      itemCategory: 0,
+      itemDescription: "",
+      itemAmount: 0,
+      itemOnSale: 0,
       errorsItem: [],
       errorCat: [],
-      categories: [],
-      categoryName: "",
+      categories: [],    
+      products: [],  
     };
   },
   mounted() {
     document.title = "My Store | E-Commerce";
     this.getCategories();
+    this.getProducts();
   },
   methods: {
     submitNewItem() {
@@ -115,40 +149,51 @@ export default {
       if (this.itemPrice < 1) {
         this.errorsItem.push("Item price must be at least 1");
       }
-      if (this.itemCategory == "") {
+      if (this.itemCategory === 0) {
         this.errorsItem.push("Item category must be selected");
       }
+      if (this.itemDescription.length < 5) {
+        this.errorsItem.push("Item description must be at least 5 characters long");
+      }
+      if (this.itemAmount < 1) {
+        this.errorsItem.push("Item amount must be at least 1");
+      }      
       if (this.errorsItem.length == 0) {
         axios
-          .get(`/api/v1/products`)
+          .post(`/api/v1/products/`, {
+            name: this.itemName,
+            price: this.itemPrice,
+            category: this.itemCategory,
+            description: this.itemDescription,
+            no_of_pieces: this.itemAmount,
+            on_sale: this.itemOnSale,
+          })
           .then((response) => {
+              console.log(this.itemOnSale)
             console.log(response.data);
+            toast({
+              message: "Successfully added!",
+              type: "is-success",
+              duration: 5000,
+              position: "top-center",
+              dissmissable: true,
+              pauseOnHover: true,
+            });            
+            this.itemName = ""
+            this.itemPrice = 0
+            this.itemCategory = 0
+            this.itemDescription = ""
+            this.itemAmount = 0
+            this.itemOnSale = 0
           })
           .catch((error) => {
             console.log(error);
           });
       }
-    },
-    submitNewCategory() {
-      if (this.categoryName.length > 0) {
-        axios
-          .post(`/api/v1/categories`, {
-            name: this.categoryName,
-          })
-          .then((response) => {
-            console.log(response.data);
-            this.getCategories();
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      } else {
-        this.errorCat.push("Category name is required");
-      }
-    },
+    },    
     getCategories() {
       axios
-        .get(`/api/v1/categories`)
+        .get(`/api/v1/latest-categories`)
         .then((response) => {
           this.categories = response.data;
         })
@@ -156,21 +201,16 @@ export default {
           console.log(error);
         });
     },
-    // getProduct() {
-    //   const category_slug = this.$route.params.category_slug;
-    //   const product_slug = this.$route.params.product_slug;
-    //   console.log(category_slug);
-    //   console.log(product_slug);
-
-    //   axios
-    //     .get(`/api/v1/products/${product_slug}`)
-    //     .then((response) => {
-    //       this.product = response.data;
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // },
+    getProducts() {      
+      axios
+        .get(`/api/v1/products/`)
+        .then((response) => {
+            this.products = response.data;            
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>
