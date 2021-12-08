@@ -7,6 +7,7 @@ import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import Account from "../views/Account.vue";
 import Checkout from "../views/Checkout.vue";
+import Search from "../views/Search";
 import PersonalStore from "../views/PersonalStore.vue";
 const routes = [
   {
@@ -56,6 +57,11 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
+  },
+  {
+    path: "/search",
+    name: "Search",
+    component: Search,
   },
   {
     path: "/products/:product_slug",
