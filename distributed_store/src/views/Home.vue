@@ -12,25 +12,14 @@
         <h2 class="is-size-2 has-text-centered">Latest products</h2>
       </div>
 
-      <div
-        class="column is-3"
-        v-for="product in latestProducts"
-        v-bind:key="product.id"
-      >
-        <div class="box">
-          <h3 class="is-size-4">{{ product.name }}</h3>
-          <p class="is-size-6 has-text-grey">${{ product.price }}</p>
-          <router-link v-bind:to="product.url" class="button is-dark mt-4">
-            View
-          </router-link>
-        </div>
-      </div>
+      <ProductBox v-for="product in latestProducts" v-bind:key="product.id" v-bind:product="product"/>
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import ProductBox from '../components/ProductBox.vue';
 export default {
   name: "Home",
   data() {
@@ -38,14 +27,17 @@ export default {
       latestProducts: [],
     };
   },
-  components: {},
+  components: {
+    ProductBox,
+  },
   mounted() {
     this.getLatestProducts();
     document.title = "Home | E-Commerce";
   },
   methods: {
-    getLatestProducts() {
-      axios
+    async getLatestProducts() {
+      this.$store.commit('setLoading',true)
+      await axios
         .get("/api/v1/latest-products/")
         .then((response) => {
           this.latestProducts = response.data;
@@ -57,7 +49,8 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-        });
+        })
+        this.$store.commit('setLoading',false)
     },
   },
 };

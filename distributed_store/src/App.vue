@@ -50,6 +50,10 @@
                 <form @submit="logout">
                   <button class="button is-light">Logout</button>
                 </form>
+                <router-link to="/cart" class="button is-success">
+                  <span class="icon"><i class="fas fa-shopping-cart"></i></span>
+                  <span>Cart ({{cartTotalLength}}) </span>
+                </router-link>
               </template>
               <template v-else>
                 <a class="button is-primary" href="/register">
@@ -62,6 +66,11 @@
         </div>
       </div>
     </nav>
+
+    <!-- <div class="is-loading-bar has-text-centered" v-bind:class="{'is-loading':$store.state.isLoading}">
+      <div class="lds-dual-ring"></div>
+    </div> -->
+
     <section class="section">
       <router-view />
     </section>
@@ -76,7 +85,12 @@
 import axios from "axios";
 export default {
   data() {
-    return {};
+    return {
+      showMobileMenu:false,
+      cart:{
+        items:[]
+      }
+    };
   },
   beforeCreate() {
     this.$store.commit("initializeStore");
@@ -87,12 +101,25 @@ export default {
       axios.defaults.headers.common["Authorization"] = "";
     }
   },
+  mounted(){
+    this.cart =this.$store.state.cart
+  },
   methods: {
     logout() {
       axios.defaults.headers.common["Authorization"] = "";
       localStorage.removeItem("token");
     },
   },
+  computed:{
+    cartTotalLength(){
+      let totalLength=0
+      for(let i=0;i<this.cart.items.length;i++){
+        totalLength+=this.cart.items[i].quantity
+      }
+      return totalLength
+    }
+    
+  }
 };
 </script>
 
