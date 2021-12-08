@@ -69,6 +69,9 @@ const routes = [
     path: "/:category_slug",
     name: "Category",
     component: Category,
+    meta: {
+      requireLogin: true,
+    }, 
   },
 ];
 
