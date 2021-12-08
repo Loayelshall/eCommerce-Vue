@@ -2,13 +2,13 @@ import { createRouter, createWebHistory } from "vue-router";
 import store from "../store";
 import Home from "../views/Home.vue";
 import Product from "../views/Product.vue";
-import Category from '../views/Category';
+import Category from "../views/Category";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import Account from "../views/Account.vue";
 import Checkout from "../views/Checkout.vue";
 import Search from "../views/Search";
-import Cart from "../views/Cart.vue"
+import Cart from "../views/Cart.vue";
 import PersonalStore from "../views/PersonalStore.vue";
 const routes = [
   {
@@ -83,7 +83,7 @@ const routes = [
     component: Category,
     meta: {
       requireLogin: true,
-    }, 
+    },
   },
 ];
 

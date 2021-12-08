@@ -12,14 +12,18 @@
         <h2 class="is-size-2 has-text-centered">Latest products</h2>
       </div>
 
-      <ProductBox v-for="product in latestProducts" v-bind:key="product.id" v-bind:product="product"/>
+      <ProductBox
+        v-for="product in latestProducts"
+        v-bind:key="product.id"
+        v-bind:product="product"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import ProductBox from '../components/ProductBox.vue';
+import ProductBox from "../components/ProductBox.vue";
 export default {
   name: "Home",
   data() {
@@ -42,13 +46,15 @@ export default {
         .then((response) => {
           this.latestProducts = response.data;
           for (let i = 0; i < this.latestProducts.length; i++) {
-            this.latestProducts[i].url = `/products/${this.latestProducts[i].id}/`;
+            this.latestProducts[
+              i
+            ].url = `/products/${this.latestProducts[i].id}/`;
           }
         })
         .catch((error) => {
           console.log(error);
-        })
-        //this.$store.commit('setLoading',false)
+        });
+      //this.$store.commit('setLoading',false)
     },
   },
 };

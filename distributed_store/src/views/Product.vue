@@ -24,7 +24,7 @@
 
 <script>
 import axios from "axios";
-import {toast} from 'bulma-toast'
+import { toast } from "bulma-toast";
 
 export default {
   name: "Product",
@@ -46,31 +46,31 @@ export default {
         .get(`/api/v1/products/${product_slug}`)
         .then((response) => {
           this.product = response.data;
-          document.title = this.product.name + ' | E-Commerce'
+          document.title = this.product.name + " | E-Commerce";
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    addToCart(){
-      if(isNaN(this.quantity)||this.quantity<1){
-        this.quantity=1
+    addToCart() {
+      if (isNaN(this.quantity) || this.quantity < 1) {
+        this.quantity = 1;
       }
-      const item={
+      const item = {
         product: this.product,
-        quantity:this.quantity
-      }
-      this.$store.commit('addToCart',item)
+        quantity: this.quantity,
+      };
+      this.$store.commit("addToCart", item);
 
       toast({
-        message:"Added to cart",
-        type:"is-success",
-        dismissible:true,
-        pauseOnHover:true,
-        duration:2000,
-        position:"bottom-right"
-      })
-    }
+        message: "Added to cart",
+        type: "is-success",
+        dismissible: true,
+        pauseOnHover: true,
+        duration: 2000,
+        position: "bottom-right",
+      });
+    },
   },
 };
 </script>

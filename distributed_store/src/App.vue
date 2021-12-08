@@ -20,19 +20,28 @@
         </a>
       </div>
 
-      <div class="navbar-menu" id="navbar-menu" v-bind:class="{'is-active': showMobileMenu }">
+      <div
+        class="navbar-menu"
+        id="navbar-menu"
+        v-bind:class="{ 'is-active': showMobileMenu }"
+      >
         <div class="navbar-start">
           <div class="navbar-item">
             <form method="get" action="/search">
               <div class="field has-addons">
                 <div class="control">
-                  <input type="text" class="input" placeholder="What are you looking for?" name="query">
+                  <input
+                    type="text"
+                    class="input"
+                    placeholder="What are you looking for?"
+                    name="query"
+                  />
                 </div>
                 <div class="control">
                   <button class="button is-success">
-                      <span class="icon">
+                    <span class="icon">
                       <i class="fas fa-search"></i>
-                      </span>
+                    </span>
                   </button>
                 </div>
               </div>
@@ -40,8 +49,6 @@
           </div>
         </div>
       </div>
-
-
 
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
@@ -75,8 +82,8 @@
                 <form @submit="logout">
                   <button class="button is-light">Logout</button>
                 </form>
-                <router-link to="/cart" class="button is-success ml-2">                  
-                  <span>Cart ({{cartTotalLength}}) </span>
+                <router-link to="/cart" class="button is-success ml-2">
+                  <span>Cart ({{ cartTotalLength }}) </span>
                 </router-link>
               </template>
               <template v-else>
@@ -110,10 +117,10 @@ import axios from "axios";
 export default {
   data() {
     return {
-      showMobileMenu:false,
-      cart:{
-        items:[]
-      }
+      showMobileMenu: false,
+      cart: {
+        items: [],
+      },
     };
   },
   beforeCreate() {
@@ -125,8 +132,8 @@ export default {
       axios.defaults.headers.common["Authorization"] = "";
     }
   },
-  mounted(){
-    this.cart =this.$store.state.cart
+  mounted() {
+    this.cart = this.$store.state.cart;
   },
   methods: {
     logout() {
@@ -134,16 +141,15 @@ export default {
       localStorage.removeItem("token");
     },
   },
-  computed:{
-    cartTotalLength(){
-      let totalLength=0
-      for(let i=0;i<this.cart.items.length;i++){
-        totalLength+=this.cart.items[i].quantity
+  computed: {
+    cartTotalLength() {
+      let totalLength = 0;
+      for (let i = 0; i < this.cart.items.length; i++) {
+        totalLength += this.cart.items[i].quantity;
       }
-      return totalLength
-    }
-    
-  }
+      return totalLength;
+    },
+  },
 };
 </script>
 

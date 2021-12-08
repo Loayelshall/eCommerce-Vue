@@ -64,11 +64,11 @@
             </div>
             <div class="column is-6 field">
               <label>Public</label>
-              <div class="control">                
-                <input type="radio" value="1" v-model="itemOnSale">
+              <div class="control">
+                <input type="radio" value="1" v-model="itemOnSale" />
                 <label> Yes</label>
-                <br>
-                <input type="radio" value="0" v-model="itemOnSale">
+                <br />
+                <input type="radio" value="0" v-model="itemOnSale" />
                 <label> No</label>
               </div>
             </div>
@@ -87,29 +87,29 @@
 
       <div class="column is-12">
         <h2 class="subtitle">My Products</h2>
-        <div class="box mb-4">            
-            <table class="table is-fullwidth">
+        <div class="box mb-4">
+          <table class="table is-fullwidth">
             <thead>
-                <tr>
+              <tr>
                 <th>Name</th>
                 <th>Price</th>
                 <th>Quantity</th>
                 <th>Description</th>
                 <th>Category</th>
                 <th>Public</th>
-                </tr>
+              </tr>
             </thead>
             <tbody>
-                <tr v-for="product in products" v-bind:key="product.id">
+              <tr v-for="product in products" v-bind:key="product.id">
                 <td>{{ product.name }}</td>
-                <td>{{ product.price }}</td>    
-                <td>{{ product.no_of_pieces }}</td>    
-                <td>{{ product.description }}</td>    
-                <td>{{ product.category }}</td> 
-                <td>{{ product.on_sale }}</td>                
-                </tr>
+                <td>{{ product.price }}</td>
+                <td>{{ product.no_of_pieces }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.category }}</td>
+                <td>{{ product.on_sale }}</td>
+              </tr>
             </tbody>
-            </table>
+          </table>
         </div>
       </div>
     </div>
@@ -132,8 +132,8 @@ export default {
       itemOnSale: 0,
       errorsItem: [],
       errorCat: [],
-      categories: [],    
-      products: [],  
+      categories: [],
+      products: [],
     };
   },
   mounted() {
@@ -153,11 +153,13 @@ export default {
         this.errorsItem.push("Item category must be selected");
       }
       if (this.itemDescription.length < 5) {
-        this.errorsItem.push("Item description must be at least 5 characters long");
+        this.errorsItem.push(
+          "Item description must be at least 5 characters long"
+        );
       }
       if (this.itemAmount < 1) {
         this.errorsItem.push("Item amount must be at least 1");
-      }      
+      }
       if (this.errorsItem.length == 0) {
         axios
           .post(`/api/v1/products/`, {
@@ -169,7 +171,7 @@ export default {
             on_sale: this.itemOnSale,
           })
           .then((response) => {
-              console.log(this.itemOnSale)
+            console.log(this.itemOnSale);
             console.log(response.data);
             toast({
               message: "Successfully added!",
@@ -178,19 +180,20 @@ export default {
               position: "top-center",
               dissmissable: true,
               pauseOnHover: true,
-            });            
-            this.itemName = ""
-            this.itemPrice = 0
-            this.itemCategory = 0
-            this.itemDescription = ""
-            this.itemAmount = 0
-            this.itemOnSale = 0
+            });
+            this.getProducts();
+            this.itemName = "";
+            this.itemPrice = 0;
+            this.itemCategory = 0;
+            this.itemDescription = "";
+            this.itemAmount = 0;
+            this.itemOnSale = 0;
           })
           .catch((error) => {
             console.log(error);
           });
       }
-    },    
+    },
     getCategories() {
       axios
         .get(`/api/v1/latest-categories`)
@@ -201,11 +204,11 @@ export default {
           console.log(error);
         });
     },
-    getProducts() {      
+    getProducts() {
       axios
         .get(`/api/v1/products/`)
         .then((response) => {
-            this.products = response.data;            
+          this.products = response.data;
         })
         .catch((error) => {
           console.log(error);
