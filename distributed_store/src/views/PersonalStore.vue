@@ -88,60 +88,64 @@
       <div class="column is-12">
         <h2 class="subtitle">My Products</h2>
         <div class="box mb-4">
-          <table class="table is-fullwidth">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Description</th>
-                <th>Category</th>
-                <th>Public</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="product in products" v-bind:key="product.id">
-                <td>{{ product.name }}</td>
-                <td>{{ product.price }}</td>
-                <td>{{ product.no_of_pieces }}</td>
-                <td>{{ product.description }}</td>
-                <td>{{ product.category }}</td>
-                <td>{{ product.on_sale }}</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="table-container">
+            <table class="table is-fullwidth">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Description</th>
+                  <th>Category</th>
+                  <th>Public</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="product in products" v-bind:key="product.id">
+                  <td>{{ product.name }}</td>
+                  <td>{{ product.price }}</td>
+                  <td>{{ product.no_of_pieces }}</td>
+                  <td>{{ product.description }}</td>
+                  <td>{{ product.category }}</td>
+                  <td>{{ product.on_sale }}</td>
+                  <td><button class="button is-dark">Edit</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
       <div class="column is-12">
         <h2 class="subtitle">Sold Products</h2>
         <div class="box mb-4">
-          <table class="table is-fullwidth">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Description</th>
-                <th>Category</th>
-                <th>Public</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="product in soldProducts" v-bind:key="product.id">
-                <td>{{ product.name }}</td>
-                <td>{{ product.price }}</td>
-                <td>{{ product.no_of_pieces }}</td>
-                <td>{{ product.description }}</td>
-                <td>{{ product.category }}</td>
-                <td>{{ product.on_sale }}</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="table-container">
+            <table class="table is-fullwidth">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Description</th>
+                  <th>Category</th>
+                  <th>Public</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="product in soldProducts" v-bind:key="product.id">
+                  <td>{{ product.name }}</td>
+                  <td>{{ product.price }}</td>
+                  <td>{{ product.no_of_pieces }}</td>
+                  <td>{{ product.description }}</td>
+                  <td>{{ product.category }}</td>
+                  <td>{{ product.on_sale }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-
-
     </div>
   </div>
 </template>
@@ -246,7 +250,7 @@ export default {
           console.log(error);
         });
     },
-        getSoldProducts() {
+    getSoldProducts() {
       axios
         .get(`/api/v1/soldProducts/`)
         .then((response) => {

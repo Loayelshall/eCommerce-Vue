@@ -12,10 +12,12 @@
           <h3 class="is-size-4 mb-6">Username: {{ username }}</h3>
           <h3 class="is-size-4 mb-6">Cash: ${{ cash }}</h3>
 
-
-
-          <button class="button is-dark " @click="toggle('addCash')">Add Cash</button>
-          <button class="button is-dark ml-4" @click="toggle('sendCash')">Send Cash</button>
+          <button class="button is-dark" @click="toggle('addCash')">
+            Add Cash
+          </button>
+          <button class="button is-dark ml-4" @click="toggle('sendCash')">
+            Send Cash
+          </button>
 
           <form id="addCash" hidden @submit.prevent="submitForm">
             <div class="field">
@@ -33,7 +35,6 @@
               </div>
             </div>
           </form>
-
 
           <form id="sendCash" hidden @submit.prevent="submitForm">
             <div class="field">
@@ -59,10 +60,6 @@
               </div>
             </div>
           </form>
-
-
-
-
         </div>
       </div>
       <hr />
@@ -101,16 +98,14 @@ export default {
     this.getOrders();
   },
   methods: {
-
-  toggle(id){
-    let temp=document.getElementById(id)
-    if(temp.hidden==true){
-      document.getElementById(id).hidden=false
-    }
-    else{
-      document.getElementById(id).hidden=true
-    }
-  },
+    toggle(id) {
+      let temp = document.getElementById(id);
+      if (temp.hidden == true) {
+        document.getElementById(id).hidden = false;
+      } else {
+        document.getElementById(id).hidden = true;
+      }
+    },
     getOrders() {
       axios
         .get("/api/v1/orders/")
@@ -142,7 +137,4 @@ export default {
   },
 };
 </script>
-<script>
-
-</script>
-
+<script></script>
