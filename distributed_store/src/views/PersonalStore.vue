@@ -146,6 +146,7 @@
                 <th>Description</th>
                 <th>Category</th>
                 <th>Public</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -156,6 +157,137 @@
                 <td>{{ product.description }}</td>
                 <td>{{ product.category_name }}</td>
                 <td>{{ product.on_sale }}</td>
+                <td>
+                  <div class="field has-addons">
+                    <p class="control">
+                      <button
+                        class="button is-dark"
+                        @click="displayModal(product.id, 1, product)"
+                      >
+                        Edit
+                      </button>
+                    </p>
+                    <p class="control">
+                      <button
+                        class="button is-danger"
+                        @click="deleteProduct(product.id)"
+                      >
+                        Delete
+                      </button>
+                    </p>
+                  </div>
+                  <div :id="product.id" class="modal">
+                    <div
+                      class="modal-background"
+                      @click="displayModal(product.id, 0, '')"
+                    ></div>
+                    <div class="modal-content">
+                      <div class="box">
+                        <h4 class="title">Edit Product</h4>
+                        <form
+                          enctype="multipart/form-data"
+                          @submit.prevent="editItem"
+                        >
+                          <div class="column is-6 field">
+                            <label>Category</label>
+                            <div class="control">
+                              <div class="select is-fullwidth">
+                                <select v-model="editedItemCategory" required>
+                                  <option value="" disabled>
+                                    Select Category
+                                  </option>
+                                  <option
+                                    v-for="category in categories"
+                                    :value="category.id"
+                                    v-bind:key="category.id"
+                                  >
+                                    {{ category.name }}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="column is-6 field">
+                            <label>Product Name</label>
+                            <div class="control">
+                              <input
+                                type="text"
+                                class="input"
+                                v-model="editedItemName"
+                              />
+                            </div>
+                          </div>
+                          <div class="column is-6 field">
+                            <label>Product Description</label>
+                            <div class="control">
+                              <input
+                                type="text"
+                                class="input"
+                                v-model="editedItemDescription"
+                              />
+                            </div>
+                          </div>
+                          <div class="column is-6 field">
+                            <label>Product Price</label>
+                            <div class="control">
+                              <input
+                                type="number"
+                                class="input"
+                                v-model="editedItemPrice"
+                                min="0"
+                              />
+                            </div>
+                          </div>
+                          <div class="column is-6 field">
+                            <label>Product Amount</label>
+                            <div class="control">
+                              <input
+                                type="number"
+                                class="input"
+                                v-model="editedItemAmount"
+                                min="0"
+                              />
+                            </div>
+                          </div>
+                          <div class="column is-6 field">
+                            <label>Public</label>
+                            <div class="control">
+                              <input
+                                type="radio"
+                                value="1"
+                                v-model="editedItemOnSale"
+                              />
+                              <label> Yes</label>
+                              <br />
+                              <input
+                                type="radio"
+                                value="0"
+                                v-model="editedItemOnSale"
+                              />
+                              <label> No</label>
+                            </div>
+                          </div>
+                          <div
+                            class="notification is-danger"
+                            v-if="editedErrorsItem.length"
+                          >
+                            <p
+                              v-for="error in editedErrorsItem"
+                              v-bind:key="error"
+                            >
+                              {{ error }}
+                            </p>
+                          </div>
+                          <div class="column is-6 field">
+                            <div class="control">
+                              <button class="button is-dark">Add</button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -203,6 +335,14 @@ export default {
   name: "PersonalStore",
   data() {
     return {
+      editedItemName: "",
+      editedItemPrice: 0,
+      editedItemCategory: 0,
+      editedItemDescription: "",
+      editedItemAmount: 0,
+      editedItemOnSale: 0,
+      editedErrorsItem: [],
+      editingId: 0,
       itemName: "",
       itemPrice: 0,
       itemCategory: 0,
@@ -277,6 +417,56 @@ export default {
           });
       }
     },
+    editItem() {
+      if (this.editedItemName.length < 3) {
+        this.editedErrorsItem.push(
+          "Item name must be at least 3 characters long"
+        );
+      }
+      if (this.editedItemPrice < 1) {
+        this.editedErrorsItem.push("Item price must be at least 1");
+      }
+      if (this.editedItemCategory === 0) {
+        this.editedErrorsItem.push("Item category must be selected");
+      }
+      if (this.editedItemDescription.length < 5) {
+        this.editedErrorsItem.push(
+          "Item description must be at least 5 characters long"
+        );
+      }
+      if (this.editedItemAmount < 1) {
+        this.editedErrorsItem.push("Item amount must be at least 1");
+      }
+      if (this.editedErrorsItem.length == 0) {
+        axios
+          .post(`/api/v1/products/`, {
+            name: this.editedItemName,
+            price: this.editedItemPrice,
+            category: this.editedItemCategory,
+            description: this.editedItemDescription,
+            no_of_pieces: this.editedItemAmount,
+            on_sale: this.editedItemOnSale,
+            image_main: "http://127.0.0.1:8000/media/uploads/download.jpg",
+            image_thumbnail: "http://127.0.0.1:8000/media/uploads/download.jpg",
+          })
+          .then((response) => {
+            console.log(response.data);
+            toast({
+              message: "Successfully Edited!",
+              type: "is-success",
+              duration: 5000,
+              position: "top-center",
+              dissmissable: true,
+              pauseOnHover: true,
+            });
+            this.displayModal(this.editingId, 0, "");
+            this.getProducts();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
     getCategories() {
       axios
         .get(`/api/v1/latest-categories`)
@@ -311,6 +501,34 @@ export default {
       let x = document.getElementById(id).value;
       let y = x.split("\\")[2];
       document.getElementById(id + "label").innerHTML = y;
+    },
+    deleteProduct(id) {
+      console.log(id);
+      axios
+        .delete(`/api/v1/products/`, {
+          product_id: id,
+        })
+        .then((response) => {
+          console.log(response);
+          this.getProducts();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    displayModal(id, toggle, product) {
+      if (toggle) {
+        document.getElementById(id).classList.add("is-active");
+        this.editedItemName = product.name;
+        this.editedItemPrice = product.price;
+        this.editedItemCategory = product.category;
+        this.editedItemDescription = product.description;
+        this.editedItemAmount = product.no_of_pieces;
+        this.editedItemOnSale = product.on_sale;
+        this.editingId = id;
+      } else {
+        document.getElementById(id).classList.remove("is-active");
+      }
     },
   },
 };
