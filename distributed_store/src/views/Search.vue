@@ -4,14 +4,37 @@
       <div class="column is-12">
         <h1 class="title">Search</h1>
 
+        <div class="field has-addons">
+          <div class="control">
+            <input
+              type="text"
+              class="input"
+              placeholder="What are you looking for?"
+              v-model="query"
+              @change="performSearch()"
+            />
+          </div>
+          <div class="control">
+            <button class="button is-success" @click="search">
+              <span class="material-icons"> search </span>
+            </button>
+          </div>
+        </div>
         <h2 class="is-size-5 has-text-grey">Search term: "{{ query }}"</h2>
       </div>
 
-      <ProductBox
-        v-for="product in products"
-        v-bind:key="product.id"
-        v-bind:product="product"
-      />
+      <div class="column is-12" v-if="products.length > 0">
+        <ProductBox
+          v-for="product in products"
+          v-bind:key="product.id"
+          v-bind:product="product"
+        />
+      </div>
+      <div v-else>
+        <div class="column is-12">
+          <p class="has-text-grey">No results found.</p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -33,30 +56,24 @@ export default {
   },
   mounted() {
     document.title = "Search | E-Commerce";
-
-    let uri = window.location.search.substring(1);
-    let params = new URLSearchParams(uri);
-
-    if (params.get("query")) {
-      this.query = params.get("query");
-
+    if (this.$route.query["query"]) {
+      this.query = this.$route.query["query"];
       this.performSearch();
     }
   },
   methods: {
     performSearch() {
-      //this.$store.commit('setIsLoading', true)
-
       axios
         .post("/api/v1/products/search/", { query: this.query })
         .then((response) => {
           this.products = response.data;
+          for (let i = 0; i < this.products.length; i++) {
+            this.products[i].url = `/products/${this.products[i].id}/`;
+          }
         })
         .catch((error) => {
           console.log(error);
         });
-
-      //this.$store.commit('setIsLoading', false)
     },
   },
 };

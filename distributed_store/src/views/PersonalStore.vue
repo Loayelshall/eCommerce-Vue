@@ -353,9 +353,6 @@
           </div>
         </div>
       </div>
-
-
-
     </div>
   </div>
 </template>
@@ -387,7 +384,7 @@ export default {
       categories: [],
       products: [],
       soldProducts: [],
-      sharedProducts:[],
+      sharedProducts: [],
     };
   },
   mounted() {
@@ -539,7 +536,7 @@ export default {
         .get(`/api/v1/shares/`)
         .then((response) => {
           this.sharedProducts = response.data;
-          console.log(response.data)
+          console.log(response.data);
         })
         .catch((error) => {
           console.log(error);

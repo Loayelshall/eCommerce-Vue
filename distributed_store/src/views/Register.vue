@@ -86,7 +86,7 @@ export default {
       if (!this.errors.length) {
         const formData = {
           username: this.username,
-          email:this.Email,
+          email: this.Email,
           password: this.password,
         };
         axios

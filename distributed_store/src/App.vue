@@ -27,23 +27,23 @@
       >
         <div class="navbar-start">
           <div class="navbar-item">
-            <form method="get" action="/search">
-              <div class="field has-addons">
-                <div class="control">
-                  <input
-                    type="text"
-                    class="input"
-                    placeholder="What are you looking for?"
-                    name="query"
-                  />
-                </div>
-                <div class="control">
-                  <button class="button is-success">
-                    <span class="material-icons"> search </span>
-                  </button>
-                </div>
+            <!-- <form> -->
+            <div class="field has-addons" v-if="this.$route.name !== 'Search'">
+              <div class="control">
+                <input
+                  type="text"
+                  class="input"
+                  placeholder="What are you looking for?"
+                  v-model="query"
+                />
               </div>
-            </form>
+              <div class="control">
+                <button class="button is-success" @click="search">
+                  <span class="material-icons"> search </span>
+                </button>
+              </div>
+            </div>
+            <!-- </form> -->
           </div>
           <div class="navbar-start">
             <a class="navbar-item"> Documentation </a>
@@ -99,10 +99,10 @@
     <section class="section">
       <router-view />
     </section>
-
+    <!-- 
     <footer class="footer">
       <p class="has-text-centered">Copyright (c) 2021</p>
-    </footer>
+    </footer> -->
   </div>
 </template>
 
@@ -115,6 +115,7 @@ export default {
       showMobileMenu: false,
       cart: {
         items: [],
+        query: "",
       },
     };
   },
@@ -131,6 +132,15 @@ export default {
     this.cart = this.$store.state.cart;
   },
   methods: {
+    search() {
+      this.$router.push({
+        name: "Search",
+        component: "Search",
+        query: {
+          query: this.query,
+        },
+      });
+    },
     logout() {
       axios.defaults.headers.common["Authorization"] = "";
       localStorage.removeItem("token");
