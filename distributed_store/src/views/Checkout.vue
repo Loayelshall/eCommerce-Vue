@@ -53,9 +53,9 @@
           <p class="has-text-grey mb-4">* All fields are required</p>
           <div class="column is-multiline">
             <div class="field">
-              <label>Name *</label>
+              <label>Email *</label>
               <div class="control">
-                <input type="text" class="input" v-model="Giftname" />
+                <input type="email" class="input" v-model="Giftname" />
               </div>
             </div>
           </div>
@@ -173,12 +173,12 @@ export default {
       const items = [];
       this.Gifterrors = [];
       if (this.Giftname === "") {
-        this.Gifterrors.push("Name is required");
+        this.Gifterrors.push("E-mail is required");
       }
       if (!this.Gifterrors.length) {
         console.log("purchasing");
         const data = {
-          name: this.Giftname,
+          Email: this.Giftname,
           items: items,
         };
         axios

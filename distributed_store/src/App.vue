@@ -156,6 +156,7 @@ export default {
       return totalLength;
     },
   },
+  
 };
 </script>
 
@@ -164,4 +165,5 @@ export default {
 @import "../node_modules/material-icons/iconfont/material-icons.css";
 </style>
 
-//GET(api/v1/shares/) //post => product
+
+// get(api/v1/orders/)

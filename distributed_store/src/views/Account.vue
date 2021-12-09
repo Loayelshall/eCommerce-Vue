@@ -12,6 +12,7 @@
           <h3 class="is-size-4 mb-6">Username: {{ username }}</h3>
           <h3 class="is-size-4 mb-6">Email: {{ email }}</h3>
           <h3 class="is-size-4 mb-6">Cash: ${{ cash }}</h3>
+          <h3 class="is-size-4 mb-6">Phone: {{ phone }}</h3>
 
           <div class="field has-addons">
             <p class="control">
@@ -58,7 +59,9 @@
               </div>
             </div>
           </div>
-
+        </div>
+        <hr />
+                <div class="box">
           <button class="button is-dark" @click="toggle('addCash', 'sendCash')">
             Add Cash
           </button>
@@ -73,7 +76,7 @@
             <div class="field">
               <label>Cash Amount</label>
               <div class="control">
-                <input type="text" class="input" v-model="cash" />
+                <input type="number " min="0" class="input" v-model="addCash"/>
               </div>
             </div>
             <div class="notification is-danger" v-if="errors.length">
@@ -88,16 +91,16 @@
 
           <form id="sendCash" hidden @submit.prevent="submitForm">
             <div class="field">
-              <label>Member Id</label>
+              <label>E-mail</label>
               <div class="control">
-                <input type="text" class="input" v-model="cash" />
+                <input type="email" class="input" v-model="emailCash"/>
               </div>
             </div>
 
             <div class="field">
               <label>Cash Amount</label>
               <div class="control">
-                <input type="text" class="input" v-model="cash" />
+                <input type="text" class="input" v-model="sendCash"/>
               </div>
             </div>
 
@@ -106,11 +109,11 @@
             </div>
             <div class="field">
               <div class="control">
-                <button class="button is-success">Send</button>
+                <button class="button is-success" @click="sendcash">Send</button>
               </div>
             </div>
           </form>
-        </div>
+          </div>
       </div>
       <hr />
 
@@ -138,14 +141,20 @@ export default {
   data() {
     return {
       orders: [],
+      info:[],
       cash: 0,
+      addCash:0,
       username: "",
       errors: [],
+      phone:'',
+      emailCash:"",
+      sendCash:0,
     };
   },
   mounted() {
     document.title = "Account | E-Commerce";
     this.getOrders();
+    this.getInfo();
   },
   methods: {
     toggle(id, id2) {
@@ -158,26 +167,63 @@ export default {
         document.getElementById(id2).hidden = false;
       }
     },
+    getInfo(){
+      axios
+        .get("/api/v1/profile/")
+        .then((response) => {
+          this.info = response.data;
+          this.cash = this.info.cash;
+          this.email = this.info.user.email;
+          this.phone = this.info.phone;
+          this.username = this.info.user.username;
+          console.log(response.data)
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      
+    },
     getOrders() {
       axios
         .get("/api/v1/orders/")
         .then((response) => {
           this.orders = response.data;
+          console.log(response.data)
         })
         .catch((error) => {
           console.log(error);
         });
     },
     submitForm() {
-      if (this.cash > 0) {
+      this.errors=[]
+      if (this.addCash > 0) {
         axios
-          .post("/api/v1/account/add-cash", {
-            cash: this.cash,
+          .post("/api/v1/profile/deposit/", {
+            value: this.addCash,
           })
           .then((response) => {
-            this.cash = 0;
+            this.addCash = 0;
             console.log(response);
-            this.getOrders();
+            this.getInfo();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        this.errors = ["Please enter a valid amount"];
+      }
+    },
+    sendcash(){
+      this.errors=[]
+      if (this.sendCash > 0) {
+      axios
+      .post("/api/v1/profile/deposit/", {
+            value: this.sendCash,
+          })
+          .then((response) => {
+            this.sendCash = 0;
+            console.log(response);
+            this.getInfo();
           })
           .catch((error) => {
             console.log(error);
