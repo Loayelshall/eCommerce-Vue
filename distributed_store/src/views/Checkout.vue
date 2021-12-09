@@ -20,7 +20,7 @@
               <td>{{ item.product.name }}</td>
               <td>${{ item.product.price }}</td>
               <td>{{ item.quantity }}</td>
-              <td>{{ getItemTotal(item).toFixed(2) }}</td>
+              <td>${{ getItemTotal(item).toFixed(2) }}</td>
             </tr>
           </tbody>
           <tfoot>
@@ -34,43 +34,45 @@
       </div>
       <div class="column is-12 box">
         <h2 class="subtitle">Shipping Details</h2>
-        <p class="has-text-grey mb-4">* All fields are required</p>
-        <div class="column is-multiline">
-          <div class="column is-6">
-            <div class="field">
-              <label>Name *</label>
-              <div class="control">
-                <input type="text" class="input" v-model="name" />
+        <form @submit.prevent="purchase">
+          <p class="has-text-grey mb-4">* All fields are required</p>
+          <div class="column is-multiline">
+            <div class="column is-6">
+              <div class="field">
+                <label>Name *</label>
+                <div class="control">
+                  <input type="text" class="input" v-model="name" />
+                </div>
               </div>
-            </div>
-            <div class="field">
-              <label>Email *</label>
-              <div class="control">
-                <input type="text" class="input" v-model="email" />
+              <div class="field">
+                <label>Email *</label>
+                <div class="control">
+                  <input type="email" class="input" v-model="email" />
+                </div>
               </div>
-            </div>
-            <div class="field">
-              <label>Phone *</label>
-              <div class="control">
-                <input type="text" class="input" v-model="phone" />
+              <div class="field">
+                <label>Phone *</label>
+                <div class="control">
+                  <input type="text" class="input" v-model="phone" />
+                </div>
               </div>
-            </div>
-            <div class="field">
-              <label>Address *</label>
-              <div class="control">
-                <input type="text" class="input" v-model="address" />
+              <div class="field">
+                <label>Address *</label>
+                <div class="control">
+                  <input type="text" class="input" v-model="address" />
+                </div>
               </div>
-            </div>
-            <div class="field">
-              <label>City *</label>
-              <div class="control">
-                <input type="text" class="input" v-model="city" />
+              <div class="field">
+                <label>City *</label>
+                <div class="control">
+                  <input type="text" class="input" v-model="city" />
+                </div>
               </div>
-            </div>
-            <div class="field">
-              <label>Zip Code *</label>
-              <div class="control">
-                <input type="text" class="input" v-model="zipcode" />
+              <div class="field">
+                <label>Zip Code *</label>
+                <div class="control">
+                  <input type="text" class="input" v-model="zipcode" />
+                </div>
               </div>
             </div>
           </div>
@@ -82,9 +84,9 @@
           <template v-if="cartTotalLength">
             <hr />
 
-            <button class="button is-dark">Pay</button>
+            <button class="button is-success">Place Order</button>
           </template>
-        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -100,7 +102,6 @@ export default {
       cart: {
         items: [],
       },
-      card: {},
       name: "",
       email: "",
       phone: "",
@@ -113,59 +114,54 @@ export default {
   mounted() {
     document.title = "Checkout | E-Commerce";
     this.cart = this.$store.state.cart;
-    if (this.toCartTotalLength() > 0) {
-      // add card
-    }
   },
   methods: {
     getItemTotal(item) {
       return item.product.price * item.quantity;
     },
-    submitForm() {
+    purchase() {
+      const items = [];
       this.errors = [];
-      if (this.name.length === "") {
+      if (this.name === "") {
         this.errors.push("Name is required");
       }
-      if (this.email.length === "") {
+      if (this.email === "") {
         this.errors.push("Email is required");
       }
-      if (this.phone.length === "") {
+      if (this.phone === "") {
         this.errors.push("Phone is required");
       }
-      if (this.address.length === "") {
+      if (this.address === "") {
         this.errors.push("Address is required");
       }
-      if (this.city.length === "") {
+      if (this.city === "") {
         this.errors.push("City is required");
       }
-      if (this.zipcode.length === "") {
+      if (this.zipcode === "") {
         this.errors.push("Zipcode is required");
       }
       if (!this.errors.length) {
-        // stripe
+        console.log("purchasing");
+        const data = {
+          name: this.name,
+          email: this.email,
+          phone: this.phone,
+          address: this.address,
+          city: this.city,
+          zipcode: this.zipcode,
+          items: items,
+        };
+        axios
+          .post("/api/v1/checkout/", data)
+          .then((response) => {
+            console.log(response);
+            this.$store.commit("clearCart");
+            this.$router.push("/cart/success");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
-    },
-    purchase() {
-      const items = [];
-      const data = {
-        name: this.name,
-        email: this.email,
-        phone: this.phone,
-        address: this.address,
-        city: this.city,
-        zipcode: this.zipcode,
-        items: items,
-      };
-      axios
-        .post("/api/v1/checkout/", data)
-        .then((response) => {
-          this.$store.commit("clearCart");
-          this.$router.push("/cart/success");
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
     },
   },
   computed: {

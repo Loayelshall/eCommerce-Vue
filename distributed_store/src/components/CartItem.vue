@@ -1,17 +1,27 @@
 <template>
   <tr>
     <td>
-      <router-link :to="item.product.get_absolute_url">{{
-        item.product.name
-      }}</router-link>
+      <router-link :to="item.product.url">{{ item.product.name }}</router-link>
     </td>
     <td>${{ item.product.price }}</td>
     <td>
-      {{ item.quantity }}
-      <a @click="decrementQuantity(item)">-</a>
-      <a @click="incrementQuantity(item)">+</a>
+      <h4>{{ item.quantity }}</h4>
     </td>
     <td>${{ getItemTotal(item).toFixed(2) }}</td>
+    <td>
+      <div class="field has-addons">
+        <p class="control">
+          <button class="button is-success" @click="incrementQuantity(item)">
+            +
+          </button>
+        </p>
+        <p class="control">
+          <button class="button is-dark" @click="decrementQuantity(item)">
+            -
+          </button>
+        </p>
+      </div>
+    </td>
     <td><button class="delete" @click="removeFromCart(item)"></button></td>
   </tr>
 </template>

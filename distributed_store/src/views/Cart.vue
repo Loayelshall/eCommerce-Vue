@@ -13,7 +13,8 @@
               <th>Price</th>
               <th>Quantity</th>
               <th>Total</th>
-              <th></th>
+              <th>Edit</th>
+              <th>Remove</th>
             </tr>
           </thead>
 
@@ -38,7 +39,7 @@
 
         <hr />
 
-        <router-link to="/cart/checkout" class="button is-dark"
+        <router-link to="/cart/checkout" class="button is-success"
           >Proceed to checkout</router-link
         >
       </div>
@@ -63,6 +64,12 @@ export default {
   },
   mounted() {
     this.cart = this.$store.state.cart;
+    document.title = "Cart | E-Commerce";
+    for (let i = 0; i < this.cart.items.length; i++) {
+      this.cart.items[
+        i
+      ].product.url = `/products/${this.cart.items[i].product.id}/`;
+    }
   },
   methods: {
     removeFromCart(item) {
