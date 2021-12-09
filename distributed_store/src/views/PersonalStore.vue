@@ -280,7 +280,9 @@
                           </div>
                           <div class="column is-6 field">
                             <div class="control">
-                              <button class="button is-dark">Add</button>
+                              <button class="button is-success">
+                                Save Changes
+                              </button>
                             </div>
                           </div>
                         </form>
@@ -473,15 +475,13 @@ export default {
       }
       if (this.editedErrorsItem.length == 0) {
         axios
-          .post(`/api/v1/products/`, {
+          .put(`/api/v1/products/${this.editingId}/`, {
             name: this.editedItemName,
             price: this.editedItemPrice,
             category: this.editedItemCategory,
             description: this.editedItemDescription,
             no_of_pieces: this.editedItemAmount,
             on_sale: this.editedItemOnSale,
-            image_main: "http://127.0.0.1:8000/media/uploads/download.jpg",
-            image_thumbnail: "http://127.0.0.1:8000/media/uploads/download.jpg",
           })
           .then((response) => {
             console.log(response.data);
@@ -550,9 +550,7 @@ export default {
     deleteProduct(id) {
       console.log(id);
       axios
-        .delete(`/api/v1/products/`, {
-          product_id: id,
-        })
+        .delete(`/api/v1/products/${id}`)
         .then((response) => {
           console.log(response);
           this.getProducts();

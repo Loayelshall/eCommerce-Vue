@@ -61,7 +61,7 @@
           </div>
         </div>
         <hr />
-                <div class="box">
+        <div class="box">
           <button class="button is-dark" @click="toggle('addCash', 'sendCash')">
             Add Cash
           </button>
@@ -76,7 +76,7 @@
             <div class="field">
               <label>Cash Amount</label>
               <div class="control">
-                <input type="number " min="0" class="input" v-model="addCash"/>
+                <input type="number " min="0" class="input" v-model="addCash" />
               </div>
             </div>
             <div class="notification is-danger" v-if="errors.length">
@@ -93,14 +93,14 @@
             <div class="field">
               <label>E-mail</label>
               <div class="control">
-                <input type="email" class="input" v-model="emailCash"/>
+                <input type="email" class="input" v-model="emailCash" />
               </div>
             </div>
 
             <div class="field">
               <label>Cash Amount</label>
               <div class="control">
-                <input type="text" class="input" v-model="sendCash"/>
+                <input type="text" class="input" v-model="sendCash" />
               </div>
             </div>
 
@@ -109,11 +109,13 @@
             </div>
             <div class="field">
               <div class="control">
-                <button class="button is-success" @click="sendcash">Send</button>
+                <button class="button is-success" @click="sendcash">
+                  Send
+                </button>
               </div>
             </div>
           </form>
-          </div>
+        </div>
       </div>
       <hr />
 
@@ -141,14 +143,14 @@ export default {
   data() {
     return {
       orders: [],
-      info:[],
+      info: [],
       cash: 0,
-      addCash:0,
+      addCash: 0,
       username: "",
       errors: [],
-      phone:'',
-      emailCash:"",
-      sendCash:0,
+      phone: "",
+      emailCash: "",
+      sendCash: 0,
     };
   },
   mounted() {
@@ -167,7 +169,7 @@ export default {
         document.getElementById(id2).hidden = false;
       }
     },
-    getInfo(){
+    getInfo() {
       axios
         .get("/api/v1/profile/")
         .then((response) => {
@@ -176,26 +178,25 @@ export default {
           this.email = this.info.user.email;
           this.phone = this.info.phone;
           this.username = this.info.user.username;
-          console.log(response.data)
+          console.log(response.data);
         })
         .catch((error) => {
           console.log(error);
         });
-      
     },
     getOrders() {
       axios
         .get("/api/v1/orders/")
         .then((response) => {
           this.orders = response.data;
-          console.log(response.data)
+          console.log(response.data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
     submitForm() {
-      this.errors=[]
+      this.errors = [];
       if (this.addCash > 0) {
         axios
           .post("/api/v1/profile/deposit/", {
@@ -213,11 +214,11 @@ export default {
         this.errors = ["Please enter a valid amount"];
       }
     },
-    sendcash(){
-      this.errors=[]
+    sendcash() {
+      this.errors = [];
       if (this.sendCash > 0) {
-      axios
-      .post("/api/v1/profile/deposit/", {
+        axios
+          .post("/api/v1/profile/deposit/", {
             value: this.sendCash,
           })
           .then((response) => {

@@ -156,7 +156,6 @@ export default {
       return totalLength;
     },
   },
-  
 };
 </script>
 
@@ -164,6 +163,5 @@ export default {
 @import "../node_modules/bulma";
 @import "../node_modules/material-icons/iconfont/material-icons.css";
 </style>
-
 
 // get(api/v1/orders/)
