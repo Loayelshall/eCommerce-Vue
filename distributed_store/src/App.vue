@@ -39,9 +39,7 @@
                 </div>
                 <div class="control">
                   <button class="button is-success">
-                    <span class="icon">
-                      <i class="fas fa-search"></i>
-                    </span>
+                    <span class="material-icons-outlined"> search </span>
                   </button>
                 </div>
               </div>
@@ -135,6 +133,7 @@ export default {
     logout() {
       axios.defaults.headers.common["Authorization"] = "";
       localStorage.removeItem("token");
+      this.$store.commit("clearCart");
     },
   },
   computed: {
@@ -151,4 +150,5 @@ export default {
 
 <style lang="scss">
 @import "../node_modules/bulma";
+@import "../node_modules/material-icons/iconfont/material-icons.css";
 </style>

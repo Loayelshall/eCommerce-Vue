@@ -364,6 +364,7 @@ export default {
   },
   methods: {
     submitNewItem() {
+      this.errorsItem = [];
       if (this.itemName.length < 3) {
         this.errorsItem.push("Item name must be at least 3 characters long");
       }
@@ -418,6 +419,7 @@ export default {
       }
     },
     editItem() {
+      this.editedErrorsItem = [];
       if (this.editedItemName.length < 3) {
         this.editedErrorsItem.push(
           "Item name must be at least 3 characters long"
@@ -517,6 +519,7 @@ export default {
         });
     },
     displayModal(id, toggle, product) {
+      this.editedErrorsItem = [];
       if (toggle) {
         document.getElementById(id).classList.add("is-active");
         this.editedItemName = product.name;
