@@ -38,10 +38,11 @@
         >, {{ cartTotalLength }} items
 
         <hr />
-
-        <router-link to="/cart/checkout" class="button is-success"
-          >Proceed to checkout</router-link
-        >
+        <div v-if="cartTotalLength">
+          <router-link to="/cart/checkout" class="button is-success"
+            >Proceed to checkout</router-link
+          >
+        </div>
       </div>
     </div>
   </div>

@@ -69,48 +69,14 @@
         </form>
 
         <form id="buy" hidden @submit.prevent="purchase">
-          <p class="has-text-grey mb-4">* All fields are required</p>
           <div class="column is-multiline">
-            <div class="column is-6">
-              <div class="field">
-                <label>Name *</label>
-                <div class="control">
-                  <input type="text" class="input" v-model="name" />
-                </div>
-              </div>
-              <div class="field">
-                <label>Email *</label>
-                <div class="control">
-                  <input type="email" class="input" v-model="email" />
-                </div>
-              </div>
-              <div class="field">
-                <label>Phone *</label>
-                <div class="control">
-                  <input type="text" class="input" v-model="phone" />
-                </div>
-              </div>
-              <div class="field">
-                <label>Address *</label>
-                <div class="control">
-                  <input type="text" class="input" v-model="address" />
-                </div>
-              </div>
-              <div class="field">
-                <label>City *</label>
-                <div class="control">
-                  <input type="text" class="input" v-model="city" />
-                </div>
-              </div>
-              <div class="field">
-                <label>Zip Code *</label>
-                <div class="control">
-                  <input type="text" class="input" v-model="zipcode" />
-                </div>
+            <div class="field">
+              <label>Address *</label>
+              <div class="control">
+                <input type="text" class="input" v-model="address" />
               </div>
             </div>
           </div>
-
           <div class="notification is-danger mt-4" v-if="errors.length">
             <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
           </div>
@@ -138,14 +104,9 @@ export default {
         items: [],
       },
       Giftname: "",
-      name: "",
-      email: "",
-      phone: "",
-      address: "",
-      city: "",
-      zipcode: "",
       errors: [],
       Gifterrors: [],
+      address: "",
     };
   },
   mounted() {
@@ -166,55 +127,46 @@ export default {
       }
     },
     purchase() {
-      const items = [];
       this.errors = [];
-      if (this.name === "") {
-        this.errors.push("Name is required");
-      }
-      if (this.email === "") {
-        this.errors.push("Email is required");
-      }
-      if (this.phone === "") {
-        this.errors.push("Phone is required");
-      }
-      if (this.address === "") {
+      let allPurchased = true;
+      if (this.address.length < 1) {
         this.errors.push("Address is required");
-      }
-      if (this.city === "") {
-        this.errors.push("City is required");
-      }
-      if (this.zipcode === "") {
-        this.errors.push("Zipcode is required");
+        allPurchased = false;
       }
       if (!this.errors.length) {
         console.log("purchasing");
-        const data = {
-          name: this.name,
-          email: this.email,
-          phone: this.phone,
-          address: this.address,
-          city: this.city,
-          zipcode: this.zipcode,
-          items: items,
-        };
-        axios
-          .post("/api/v1/orders/", data)
-          .then((response) => {
-            console.log(response);
-            this.$store.commit("clearCart");
-            toast({
-              message: "Boat!",
-              type: "is-success",
-              duration: 5000,
-              position: "top-center",
-              dissmissable: true,
-              pauseOnHover: true,
+        for (let i = 0; i < this.cart.items.length; i++) {
+          let cust = {
+            product: this.cart.items[i].product.id,
+            amount: this.cart.items[i].quantity,
+            location: this.address,
+          };
+          axios
+            .post("/api/v1/orders/", cust)
+            .then((response) => {
+              console.log(response);
+              this.$store.commit("clearCart");
+              toast({
+                message: `${this.cart.items[i].product.name} purchased successfully`,
+                type: "is-success",
+                duration: 5000,
+                position: "top-center",
+                dissmissable: true,
+                pauseOnHover: true,
+              });
+              let cart = this.$store.state.cart;
+              cart.items.splice(i, 1);
+              localStorage.setItem("cart", JSON.stringify(cart));
+            })
+            .catch((error) => {
+              allPurchased = false;
+              console.log(error);
             });
-            this.$router.push("/cart/success");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        }
+        if (allPurchased) {
+          // this.$router.push("/cart");
+          this.$router.push("/");
+        }
       }
     },
     gift() {
