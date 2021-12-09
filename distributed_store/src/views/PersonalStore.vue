@@ -539,6 +539,7 @@ export default {
         .get(`/api/v1/shares/`)
         .then((response) => {
           this.sharedProducts = response.data;
+          console.log(response.data)
         })
         .catch((error) => {
           console.log(error);
