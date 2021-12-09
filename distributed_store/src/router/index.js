@@ -65,6 +65,11 @@ const routes = [
     component: Search,
   },
   {
+    path: "/browse",
+    name: "Browse",
+    component: Search,
+  },
+  {
     path: "/cart",
     name: "Cart",
     component: Cart,

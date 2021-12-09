@@ -46,7 +46,7 @@
             <!-- </form> -->
           </div>
           <div class="navbar-start">
-            <a class="navbar-item"> Documentation </a>
+            <a class="navbar-item" href="/browse"> Browse </a>
             <template v-if="$store.state.isAuthenticated">
               <router-link to="/personalStore" class="navbar-item">
                 My Store
