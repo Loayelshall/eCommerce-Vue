@@ -68,6 +68,9 @@ const routes = [
     path: "/cart",
     name: "Cart",
     component: Cart,
+    meta: {
+      requireLogin: true,
+    },
   },
   {
     path: "/products/:product_slug",

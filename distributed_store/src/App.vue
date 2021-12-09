@@ -39,7 +39,7 @@
                 </div>
                 <div class="control">
                   <button class="button is-success">
-                    <span class="material-icons-outlined"> search </span>
+                    <span class="material-icons"> search </span>
                   </button>
                 </div>
               </div>
@@ -108,6 +108,7 @@
 
 <script>
 import axios from "axios";
+
 export default {
   data() {
     return {
@@ -152,3 +153,5 @@ export default {
 @import "../node_modules/bulma";
 @import "../node_modules/material-icons/iconfont/material-icons.css";
 </style>
+
+//GET(api/v1/shares/) //post => product

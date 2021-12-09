@@ -323,6 +323,39 @@
           </div>
         </div>
       </div>
+
+      <div class="column is-12">
+        <h2 class="subtitle">Shared Products</h2>
+        <div class="box mb-4">
+          <div class="table-container">
+            <table class="table is-fullwidth">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Description</th>
+                  <th>Category</th>
+                  <th>Public</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="product in sharedProducts" v-bind:key="product.id">
+                  <td>{{ product.name }}</td>
+                  <td>{{ product.price }}</td>
+                  <td>{{ product.no_of_pieces }}</td>
+                  <td>{{ product.description }}</td>
+                  <td>{{ product.category }}</td>
+                  <td>{{ product.on_sale }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+
+
     </div>
   </div>
 </template>
@@ -354,6 +387,7 @@ export default {
       categories: [],
       products: [],
       soldProducts: [],
+      sharedProducts:[],
     };
   },
   mounted() {
@@ -361,6 +395,7 @@ export default {
     this.getCategories();
     this.getProducts();
     this.getSoldProducts();
+    this.getSharedProducts();
   },
   methods: {
     submitNewItem() {
@@ -494,6 +529,16 @@ export default {
         .get(`/api/v1/soldProducts/`)
         .then((response) => {
           this.soldProducts = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getSharedProducts() {
+      axios
+        .get(`/api/v1/shares/`)
+        .then((response) => {
+          this.sharedProducts = response.data;
         })
         .catch((error) => {
           console.log(error);
