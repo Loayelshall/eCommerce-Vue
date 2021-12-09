@@ -10,12 +10,62 @@
         <h2 class="subtitle">Information</h2>
         <div class="box mb-4">
           <h3 class="is-size-4 mb-6">Username: {{ username }}</h3>
+          <h3 class="is-size-4 mb-6">Email: {{ email }}</h3>
           <h3 class="is-size-4 mb-6">Cash: ${{ cash }}</h3>
 
-          <button class="button is-dark" @click="toggle('addCash')">
+          <div class="field has-addons">
+            <p class="control">
+              <button
+                class="button is-dark"
+                @click="displayModal('editModal', 1)"
+              >
+                Edit Profile
+              </button>
+            </p>
+          </div>
+          <div id="editModal" class="modal">
+            <div
+              class="modal-background"
+              @click="displayModal('editModal', 0)"
+            ></div>
+            <div class="modal-content">
+              <div class="box">
+                <h4 class="title">Edit Profile</h4>
+                <form>
+                  <div class="column is-12 field">
+                    <label>Username</label>
+                    <div class="control">
+                      <input
+                        type="text"
+                        class="input"
+                        v-model="editedItemName"
+                      />
+                    </div>
+                  </div>
+                  <div class="column is-12 field">
+                    <label>Email</label>
+                    <div class="control">
+                      <input
+                        type="text"
+                        class="input"
+                        v-model="editedItemName"
+                      />
+                    </div>
+                  </div>
+                  <hr />
+                  <button class="button is-success">Save Changes</button>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <button class="button is-dark" @click="toggle('addCash', 'sendCash')">
             Add Cash
           </button>
-          <button class="button is-dark ml-4" @click="toggle('sendCash')">
+          <button
+            class="button is-dark ml-4"
+            @click="toggle('sendCash', 'addCash')"
+          >
             Send Cash
           </button>
 
@@ -98,12 +148,14 @@ export default {
     this.getOrders();
   },
   methods: {
-    toggle(id) {
+    toggle(id, id2) {
       let temp = document.getElementById(id);
       if (temp.hidden == true) {
         document.getElementById(id).hidden = false;
+        document.getElementById(id2).hidden = true;
       } else {
         document.getElementById(id).hidden = true;
+        document.getElementById(id2).hidden = false;
       }
     },
     getOrders() {
@@ -132,6 +184,21 @@ export default {
           });
       } else {
         this.errors = ["Please enter a valid amount"];
+      }
+    },
+    displayModal(id, toggle) {
+      this.editedErrorsItem = [];
+      if (toggle) {
+        document.getElementById(id).classList.add("is-active");
+        // this.editedItemName = product.name;
+        // this.editedItemPrice = product.price;
+        // this.editedItemCategory = product.category;
+        // this.editedItemDescription = product.description;
+        // this.editedItemAmount = product.no_of_pieces;
+        // this.editedItemOnSale = product.on_sale;
+        // this.editingId = id;
+      } else {
+        document.getElementById(id).classList.remove("is-active");
       }
     },
   },
