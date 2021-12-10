@@ -14,7 +14,7 @@
           <h3 class="is-size-4 mb-6">Email: {{ email }}</h3>
           <h3 class="is-size-4 mb-6">Phone: {{ phone }}</h3>
           <h3 class="is-size-4 mb-6">Location: {{ location }}</h3>
-          <h3 class="is-size-4 mb-6">Sex: {{ sex }}</h3>
+          <h3 class="is-size-4 mb-6">Gender: {{ sex }}</h3>
 
           <div class="field has-addons">
             <p class="control">
@@ -63,7 +63,7 @@
                     </div>
                   </div>
                   <div class="column is-12 field">
-                    <label>Sex</label>
+                    <label>Gender</label>
                     <div class="control">
                       <div class="select is-fullwidth">
                         <select v-model="editedSex">
