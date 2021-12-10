@@ -340,13 +340,16 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="product in sharedProducts" v-bind:key="product.id">
-                  <td>{{ product.name }}</td>
-                  <td>{{ product.price }}</td>
-                  <td>{{ product.no_of_pieces }}</td>
-                  <td>{{ product.description }}</td>
-                  <td>{{ product.category }}</td>
-                  <td>{{ product.on_sale }}</td>
+                <tr
+                  v-for="currProduct in sharedProducts"
+                  v-bind:key="currProduct.id"
+                >
+                  <td>{{ currProduct.product.name }}</td>
+                  <td>{{ currProduct.product.price }}</td>
+                  <td>{{ currProduct.product.no_of_pieces }}</td>
+                  <td>{{ currProduct.product.description }}</td>
+                  <td>{{ currProduct.product.category_name }}</td>
+                  <td>{{ currProduct.product.on_sale }}</td>
                 </tr>
               </tbody>
             </table>
