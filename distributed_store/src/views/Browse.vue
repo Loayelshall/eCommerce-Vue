@@ -114,7 +114,7 @@ export default {
   methods: {
     getCategory() {
       //this.$store.commit('setIsLoading', true)
-      axios.get(`api/v1/products/shop`).then((response) => {
+      axios.get(`api/v1/products/shop/`).then((response) => {
         this.products = response.data;
         for (let i = 0; i < this.products.length; i++) {
           this.products[i].url = `/products/${this.products[i].id}/`;
@@ -124,11 +124,13 @@ export default {
       //this.$store.commit('setIsLoading', false)
     },
     getShared() {
-      axios.get(`api/v1/shares`).then((response) => {
+      axios.get(`api/v1/shares/`).then((response) => {
         this.shares = response.data;
         console.log(response.data);
         for (let i = 0; i < this.shares.length; i++) {
-          this.shares[i].url = `/products/${this.shares[i].product.id}/`;
+          this.shares[
+            i
+          ].url = `/products/${this.shares[i].product.id}/?shared=yes`;
         }
       });
       // .catch(error=>{
