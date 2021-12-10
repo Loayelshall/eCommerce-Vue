@@ -11,9 +11,11 @@
     "axios": "^0.24.0",
     "bulma": "^0.9.3",
     "bulma-toast": "^2.4.1",
+    "chart.js": "^3.6.2",
     "core-js": "^3.6.5",
     "material-icons": "^1.10.4",
     "vue": "^3.0.0",
+    "vue-material": "^1.0.0-beta-15",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
   },

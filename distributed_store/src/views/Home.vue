@@ -37,13 +37,12 @@ export default {
     ProductBox,
   },
   mounted() {
-    if(this.$store.state.isAuthenticated){
+    if (this.$store.state.isAuthenticated) {
       this.getBrowse();
-    }
-    else{
+    } else {
       this.getLatestProducts();
     }
-    
+
     document.title = "Home | E-Commerce";
   },
   methods: {
@@ -73,8 +72,8 @@ export default {
         });
       //this.$store.commit('setLoading',false)
     },
-    getBrowse(){
-        axios
+    getBrowse() {
+      axios
         .get("/api/v1/products/shop/")
         .then((response) => {
           this.latestProducts = response.data;
@@ -96,7 +95,7 @@ export default {
             pauseOnHover: true,
           });
         });
-    }
+    },
   },
 };
 </script>

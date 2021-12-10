@@ -11,6 +11,7 @@ import Search from "../views/Search";
 import Cart from "../views/Cart.vue";
 import Browse from "../views/Browse.vue";
 import PersonalStore from "../views/PersonalStore.vue";
+import Report from "../views/Report.vue";
 const routes = [
   {
     path: "/",
@@ -77,6 +78,14 @@ const routes = [
     path: "/cart",
     name: "Cart",
     component: Cart,
+    meta: {
+      requireLogin: true,
+    },
+  },
+  {
+    path: "/report",
+    name: "Report",
+    component: Report,
     meta: {
       requireLogin: true,
     },

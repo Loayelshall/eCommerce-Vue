@@ -1,5 +1,5 @@
 <template>
-  <div id="wrapper">
+  <div class="container-fluid" id="wrapper">
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <a class="navbar-item" href="/">
@@ -51,6 +51,7 @@
               <router-link to="/personalStore" class="navbar-item">
                 My Store
               </router-link>
+              <a class="navbar-item" href="/report"> Report </a>
             </template>
 
             <div class="navbar-item has-dropdown is-hoverable">
@@ -96,7 +97,7 @@
       <div class="lds-dual-ring"></div>
     </div> -->
 
-    <section class="section">
+    <section class="">
       <router-view />
     </section>
     <!-- 
@@ -162,6 +163,7 @@ export default {
 <style lang="scss">
 @import "../node_modules/bulma";
 @import "../node_modules/material-icons/iconfont/material-icons.css";
+@import "../node_modules/vue-material/dist/vue-material.min.css";
 </style>
 
 // get(api/v1/orders/)

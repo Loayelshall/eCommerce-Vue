@@ -10,7 +10,7 @@
         v-for="product in products"
         v-bind:key="product.id"
       >
-        <div class="box" v-if="product.on_sale">
+        <div class="box" v-if="product.on_sale && product.no_of_pieces != 0">
           <figure class="image mb-4">
             <img v-bind:src="product.image_thumbnail" />
           </figure>
