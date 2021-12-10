@@ -9,10 +9,12 @@
       <div class="column is-12">
         <h2 class="subtitle">Information</h2>
         <div class="box mb-4">
+          <h3 class="is-size-4 mb-6">Cash: ${{ cash }}</h3>
           <h3 class="is-size-4 mb-6">Username: {{ username }}</h3>
           <h3 class="is-size-4 mb-6">Email: {{ email }}</h3>
-          <h3 class="is-size-4 mb-6">Cash: ${{ cash }}</h3>
           <h3 class="is-size-4 mb-6">Phone: {{ phone }}</h3>
+          <h3 class="is-size-4 mb-6">Location: {{ location }}</h3>
+          <h3 class="is-size-4 mb-6">Sex: {{ sex }}</h3>
 
           <div class="field has-addons">
             <p class="control">
@@ -32,26 +34,52 @@
             <div class="modal-content">
               <div class="box">
                 <h4 class="title">Edit Profile</h4>
-                <form>
+                <form @submit.prevent="editProfile">
                   <div class="column is-12 field">
-                    <label>Username</label>
+                    <label>Location</label>
                     <div class="control">
                       <input
                         type="text"
                         class="input"
-                        v-model="editedItemName"
+                        v-model="editedLocation"
                       />
                     </div>
                   </div>
                   <div class="column is-12 field">
-                    <label>Email</label>
+                    <label>Birth Date</label>
+                    <div class="control">
+                      <input type="date" class="input" v-model="editedBirth" />
+                    </div>
+                  </div>
+                  <div class="column is-12 field">
+                    <label>Phone</label>
                     <div class="control">
                       <input
-                        type="text"
+                        type="number"
+                        min="0"
                         class="input"
-                        v-model="editedItemName"
+                        v-model="editedPhone"
                       />
                     </div>
+                  </div>
+                  <div class="column is-12 field">
+                    <label>Sex</label>
+                    <div class="control">
+                      <div class="select is-fullwidth">
+                        <select v-model="editedSex">
+                          <option value="F">Female</option>
+                          <option value="M">Male</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="notification is-danger"
+                    v-if="editedErrors.length"
+                  >
+                    <p v-for="error in editedErrors" v-bind:key="error">
+                      {{ error }}
+                    </p>
                   </div>
                   <hr />
                   <button class="button is-success">Save Changes</button>
@@ -89,7 +117,7 @@
             </div>
           </form>
 
-          <form id="sendCash" hidden @submit.prevent="submitForm">
+          <form id="sendCash" hidden @submit.prevent="transactionCash">
             <div class="field">
               <label>E-mail</label>
               <div class="control">
@@ -104,14 +132,12 @@
               </div>
             </div>
 
-            <div class="notification is-danger" v-if="errors.length">
-              <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
+            <div class="notification is-danger" v-if="transErrors.length">
+              <p v-for="error in transErrors" v-bind:key="error">{{ error }}</p>
             </div>
             <div class="field">
               <div class="control">
-                <button class="button is-success" @click="sendcash">
-                  Send
-                </button>
+                <button class="button is-success">Send</button>
               </div>
             </div>
           </form>
@@ -134,6 +160,7 @@
 
 <script>
 import axios from "axios";
+import { toast } from "bulma-toast";
 import OrderSummary from "../components/OrderSummary.vue";
 export default {
   name: "Account",
@@ -149,8 +176,17 @@ export default {
       username: "",
       errors: [],
       phone: "",
+      location: "",
+      sex: "",
       emailCash: "",
       sendCash: 0,
+      transErrors: [],
+      editedLocation: "",
+      editedBirth: "0000-00-00",
+      editedPhone: "",
+      editedSex: "",
+      editedErrors: [],
+      user_id: 0,
     };
   },
   mounted() {
@@ -159,14 +195,46 @@ export default {
     this.getInfo();
   },
   methods: {
+    transactionCash() {
+      this.transErrors = [];
+      if (this.sendCash > 0 && this.emailCash.length > 0) {
+        axios
+          .post("/api/v1/transactions/", {
+            receiver: this.emailCash,
+            transaction_size: this.sendCash,
+          })
+          .then((response) => {
+            console.log(response);
+            toast({
+              message: `$${this.sendCash} sent to ${this.emailCash}`,
+              type: "is-success",
+              duration: 5000,
+              position: "top-center",
+              dissmissable: true,
+              pauseOnHover: true,
+            });
+            this.sendCash = 0;
+            this.emailCash = "";
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        this.transErrors = ["Please enter a valid amount and email"];
+      }
+    },
     toggle(id, id2) {
       let temp = document.getElementById(id);
-      if (temp.hidden == true) {
+      let temp2 = document.getElementById(id2);
+      if (temp.hidden == true && temp2.hidden == true) {
+        document.getElementById(id).hidden = false;
+        document.getElementById(id2).hidden = true;
+      } else if (temp2.hidden == false) {
         document.getElementById(id).hidden = false;
         document.getElementById(id2).hidden = true;
       } else {
         document.getElementById(id).hidden = true;
-        document.getElementById(id2).hidden = false;
+        document.getElementById(id2).hidden = true;
       }
     },
     getInfo() {
@@ -178,6 +246,9 @@ export default {
           this.email = this.info.user.email;
           this.phone = this.info.phone;
           this.username = this.info.user.username;
+          this.location = this.info.location;
+          this.sex = this.info.sex;
+          this.user_id = this.info.id;
           console.log(response.data);
         })
         .catch((error) => {
@@ -233,17 +304,34 @@ export default {
         this.errors = ["Please enter a valid amount"];
       }
     },
+    editProfile() {
+      this.editedErrors = [];
+      if (this.editedErrors.length == 0) {
+        axios
+          .put(`/api/v1/profile/${this.user_id}/`, {
+            cash: this.cash,
+            location: this.editedLocation,
+            phone: this.editedPhone,
+            birth_date: this.editedBirth,
+            sex: this.editedSex,
+          })
+          .then((response) => {
+            console.log(response);
+            this.getInfo();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
     displayModal(id, toggle) {
-      this.editedErrorsItem = [];
+      this.editedErrors = [];
       if (toggle) {
         document.getElementById(id).classList.add("is-active");
-        // this.editedItemName = product.name;
-        // this.editedItemPrice = product.price;
-        // this.editedItemCategory = product.category;
-        // this.editedItemDescription = product.description;
-        // this.editedItemAmount = product.no_of_pieces;
-        // this.editedItemOnSale = product.on_sale;
-        // this.editingId = id;
+        this.editedLocation = this.info.location;
+        this.editedPhone = this.info.phone;
+        this.editedBirth = this.info.birth;
+        this.editedSex = this.info.sex;
       } else {
         document.getElementById(id).classList.remove("is-active");
       }
