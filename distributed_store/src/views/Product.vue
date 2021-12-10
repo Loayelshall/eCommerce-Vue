@@ -27,7 +27,9 @@
       </div>
     </section>
     <div class="has-text-centered">
-      <button class="is-large button" @click="Share">Share</button>
+      <button class="is-large button" v-if="!shared" @click="Share">
+        Share
+      </button>
     </div>
   </div>
 </template>
@@ -42,10 +44,12 @@ export default {
     return {
       product: {},
       quantity: 1,
+      shared: false,
     };
   },
   mounted() {
     this.getProduct();
+    this.getshare();
   },
   methods: {
     async getProduct() {
@@ -71,6 +75,10 @@ export default {
           });
         });
     },
+    getshare() {
+      this.shared = this.$route.query.shared;
+      console.log(this.$route.query.shared);
+    },
     addToCart() {
       if (isNaN(this.quantity) || this.quantity < 1) {
         this.quantity = 1;
@@ -80,27 +88,27 @@ export default {
         quantity: this.quantity,
       };
 
-      if (this.item.quantity < this.item.product.quantity) {
-        this.$store.commit("addToCart", item);
+      // if (this.item.quantity < this.item.product.quantity) {
+      this.$store.commit("addToCart", item);
 
-        toast({
-          message: "Added to cart",
-          type: "is-success",
-          dismissible: true,
-          pauseOnHover: true,
-          duration: 2000,
-          position: "bottom-right",
-        });
-      } else {
-        toast({
-          message: "Quantity is not available",
-          type: "is-danger",
-          dismissible: true,
-          pauseOnHover: true,
-          duration: 2000,
-          position: "bottom-right",
-        });
-      }
+      toast({
+        message: "Added to cart",
+        type: "is-success",
+        dismissible: true,
+        pauseOnHover: true,
+        duration: 2000,
+        position: "bottom-right",
+      });
+      // } else {
+      //   toast({
+      //     message: "Quantity is not available",
+      //     type: "is-danger",
+      //     dismissible: true,
+      //     pauseOnHover: true,
+      //     duration: 2000,
+      //     position: "bottom-right",
+      //   });
+      // }
     },
     Share() {
       if (isNaN(this.quantity) || this.quantity < 1) {

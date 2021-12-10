@@ -112,7 +112,6 @@ export default {
   mounted() {
     document.title = "Checkout | E-Commerce";
     this.cart = this.$store.state.cart;
-    console.log(JSON.stringify(this.cart.items));
   },
   methods: {
     getItemTotal(item) {
@@ -135,7 +134,6 @@ export default {
         allPurchased = false;
       }
       if (allPurchased) {
-        console.log("purchasing");
         for (let i = 0; i < this.cart.items.length; i++) {
           let cust = {
             product: this.cart.items[i].product.id,
@@ -178,32 +176,45 @@ export default {
         }
       }
     },
-
     gift() {
       this.Gifterrors = [];
       if (this.Giftname === "") {
         this.Gifterrors.push("E-mail is required");
       }
       if (!this.Gifterrors.length) {
-        console.log("purchasing");
         const data = {
           email: this.Giftname,
           items: this.cart.items,
         };
-        console.log(JSON.stringify(data));
         axios
           .post("/api/v1/gifts/", data)
           .then((response) => {
             console.log(response);
             this.$store.commit("clearCart");
-            toast({
-              message: "Gifted!",
-              type: "is-success",
-              duration: 5000,
-              position: "top-center",
-              dissmissable: true,
-              pauseOnHover: true,
-            });
+            for (let res in response.data) {
+              console.log(response.data[res])
+              console.log(Object.prototype.hasOwnProperty.call(response.data[res], "response"))
+              if (Object.prototype.hasOwnProperty.call(response.data[res], "response")) {
+                toast({
+                  message: `${response.data[res].response}`,
+                  type: "is-danger",
+                  duration: 5000,
+                  position: "top-center",
+                  dissmissable: true,
+                  pauseOnHover: true,
+                });
+              } else {
+                toast({
+                  message: "Gifted!",
+                  type: "is-success",
+                  duration: 5000,
+                  position: "top-center",
+                  dissmissable: true,
+                  pauseOnHover: true,
+                });
+              }
+            }
+
             this.$router.push("/cart");
           })
           .catch((error) => {

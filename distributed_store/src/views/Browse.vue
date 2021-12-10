@@ -41,7 +41,7 @@
         <h3 class="is-size-4">Price</h3>
         <p class="is-size-6 has-text-grey">${{ share.product.price }}</p>
         <h3 class="is-size-4">Sold By</h3>
-        <p class="is-size-6 has-text-grey">{{ share.share_holder }}</p>
+        <p class="is-size-6 has-text-grey">{{ share.share_holder_name }}</p>
         <h3 class="is-size-4">Quantity</h3>
         <p class="is-size-6 has-text-grey">{{ share.product.no_of_pieces }}</p>
         <router-link v-bind:to="share.url" class="button is-dark mt-4">
@@ -75,7 +75,7 @@ export default {
   methods: {
     getCategory() {
       //this.$store.commit('setIsLoading', true)
-      axios.get(`api/v1/products/shop`).then((response) => {
+      axios.get(`api/v1/products/shop/`).then((response) => {
         this.products = response.data;
         for (let i = 0; i < this.products.length; i++) {
           this.products[i].url = `/products/${this.products[i].id}/`;
@@ -85,11 +85,13 @@ export default {
       //this.$store.commit('setIsLoading', false)
     },
     getShared() {
-      axios.get(`api/v1/shares`).then((response) => {
+      axios.get(`api/v1/shares/shop/`).then((response) => {
         this.shares = response.data;
         console.log(response.data);
         for (let i = 0; i < this.shares.length; i++) {
-          this.shares[i].url = `/products/${this.shares[i].product.id}/`;
+          this.shares[
+            i
+          ].url = `/products/${this.shares[i].product.id}/?shared=yes`;
         }
       });
       // .catch(error=>{
