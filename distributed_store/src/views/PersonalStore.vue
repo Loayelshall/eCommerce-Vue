@@ -152,7 +152,7 @@
             <tbody>
               <tr v-for="product in products" v-bind:key="product.id">
                 <td>{{ product.name }}</td>
-                <td>{{ product.price }}</td>
+                <td>${{ product.price }}</td>
                 <td>{{ product.no_of_pieces }}</td>
                 <td>{{ product.description }}</td>
                 <td>{{ product.category_name }}</td>
@@ -308,17 +308,15 @@
                   <th>Quantity</th>
                   <th>Description</th>
                   <th>Category</th>
-                  <th>Public</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="product in soldProducts" v-bind:key="product.id">
                   <td>{{ product.name }}</td>
-                  <td>{{ product.price }}</td>
+                  <td>${{ product.price }}</td>
                   <td>{{ product.no_of_pieces }}</td>
                   <td>{{ product.description }}</td>
-                  <td>{{ product.category }}</td>
-                  <td>{{ product.on_sale }}</td>
+                  <td>{{ product.category_name }}</td>
                 </tr>
               </tbody>
             </table>
@@ -523,9 +521,20 @@ export default {
     },
     getSoldProducts() {
       axios
-        .get(`/api/v1/soldProducts/`)
+        .get(`/api/v1/orders/sold`)
         .then((response) => {
-          this.soldProducts = response.data;
+          this.soldProducts = {};
+          console.log(response.data);
+          for (let i = 0; i < response.data.length; i++) {
+            if (!this.soldProducts[response.data[i].product.id]) {
+              response.data[i].product.no_of_pieces = response.data[i].amount;
+              this.soldProducts[response.data[i].product.id] =
+                response.data[i].product;
+            } else {
+              this.soldProducts[response.data[i].product.id].no_of_pieces +=
+                response.data[i].amount;
+            }
+          }
         })
         .catch((error) => {
           console.log(error);
