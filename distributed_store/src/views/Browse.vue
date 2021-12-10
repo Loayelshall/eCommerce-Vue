@@ -1,52 +1,91 @@
 <template>
-  <div class="page-category">
-    <div class="columns is-multiline">
-      <div class="column is-12">
-        <h2 class="is-size-2 has-text-centered"></h2>
-      </div>
-
-      <div
-        class="column is-3"
-        v-for="product in products"
-        v-bind:key="product.id"
-      >
-        <div class="box" v-if="product.on_sale && product.no_of_pieces != 0">
-          <figure class="image mb-4">
-            <img v-bind:src="product.image_thumbnail" />
-          </figure>
-          <h3 class="is-size-4">{{ product.name }}</h3>
-          <h3 class="is-size-4">Price</h3>
-          <p class="is-size-6 has-text-grey">${{ product.price }}</p>
-          <h3 class="is-size-4">Sold By</h3>
-          <p class="is-size-6 has-text-grey">{{ product.owner_name }}</p>
-          <h3 class="is-size-4">Quantity</h3>
-          <p class="is-size-6 has-text-grey">{{ product.no_of_pieces }}</p>
-          <router-link v-bind:to="product.url" class="button is-dark mt-4">
-            View
-          </router-link>
+  <div class="container">
+    <div class="md-layout">
+      <div class="md-layout-item m-5">
+        <div class="brand m-5 has-text-centered">
+          <h1 class="title">Products</h1>
         </div>
       </div>
     </div>
-    <h1 class="title">shared items</h1>
-    <div
-      class="column is-3"
-      v-for="share in shares"
-      v-bind:key="share.product.id"
-    >
-      <div class="box" v-if="share.product.on_sale">
-        <figure class="image mb-4">
-          <img v-bind:src="share.product.image_thumbnail" />
-        </figure>
-        <h3 class="is-size-4">{{ share.product.name }}</h3>
-        <h3 class="is-size-4">Price</h3>
-        <p class="is-size-6 has-text-grey">${{ share.product.price }}</p>
-        <h3 class="is-size-4">Sold By</h3>
-        <p class="is-size-6 has-text-grey">{{ share.share_holder }}</p>
-        <h3 class="is-size-4">Quantity</h3>
-        <p class="is-size-6 has-text-grey">{{ share.product.no_of_pieces }}</p>
-        <router-link v-bind:to="share.url" class="button is-dark mt-4">
-          View
-        </router-link>
+    <div class="columns is-multiline">
+      <div class="tile is-parent">
+        <div v-for="product in products" v-bind:key="product.id">
+          <div class="" v-if="product.on_sale && product.no_of_pieces != 0">
+            <div class="tile is-12 is-vertical is-parent" style="width: 350px">
+              <div class="tile is-child box">
+                <h4 class="is-size-4">{{ product.name }}</h4>
+                <div class="has-text-centered m-4">
+                  <h1 class="title m-4">${{ product.price }}</h1>
+                </div>
+                <div class="m-1">
+                  <p
+                    class="is-size-6 has-text-grey is-right"
+                    style="float: left"
+                  >
+                    Owner: {{ product.owner_name }}
+                  </p>
+                  <p
+                    class="is-size-6 has-text-grey is-right"
+                    style="float: right"
+                  >
+                    Quantity: {{ product.no_of_pieces }}
+                  </p>
+                </div>
+                <br />
+                <div class="has-text-centered">
+                  <router-link
+                    v-bind:to="product.url"
+                    class="button is-dark mt-4"
+                  >
+                    View
+                  </router-link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div class="md-layout">
+      <div class="md-layout-item m-5">
+        <div class="brand has-text-centered">
+          <h1 class="title">Shared Products</h1>
+        </div>
+      </div>
+    </div>
+    <div class="tile is-parent">
+      <div class="" v-for="share in shares" v-bind:key="share.product.id">
+        <div
+          class=""
+          v-if="share.product.on_sale && share.product.no_of_pieces != 0"
+        >
+          <div class="tile is-12 is-vertical is-parent" style="width: 350px">
+            <div class="tile is-child box">
+              <h4 class="is-size-4">{{ share.product.name }}</h4>
+              <div class="has-text-centered m-4">
+                <h1 class="title m-4">${{ share.product.price }}</h1>
+              </div>
+              <div class="m-1">
+                <p class="is-size-6 has-text-grey is-right" style="float: left">
+                  Owner: {{ share.product.owner_name }}
+                </p>
+                <p
+                  class="is-size-6 has-text-grey is-right"
+                  style="float: right"
+                >
+                  Quantity: {{ share.product.no_of_pieces }}
+                </p>
+              </div>
+              <br />
+              <div class="has-text-centered">
+                <router-link v-bind:to="share.url" class="button is-dark mt-4">
+                  View
+                </router-link>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
