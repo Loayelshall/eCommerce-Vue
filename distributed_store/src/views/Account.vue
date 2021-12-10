@@ -54,12 +54,7 @@
                   <div class="column is-12 field">
                     <label>Phone</label>
                     <div class="control">
-                      <input
-                        type="number"
-                        min="0"
-                        class="input"
-                        v-model="editedPhone"
-                      />
+                      <input type="text" class="input" v-model="editedPhone" />
                     </div>
                   </div>
                   <div class="column is-12 field">
@@ -344,6 +339,7 @@ export default {
           .then((response) => {
             console.log(response);
             this.getInfo();
+            this.displayModal("editModal", 0);
           })
           .catch((error) => {
             console.log(error);
