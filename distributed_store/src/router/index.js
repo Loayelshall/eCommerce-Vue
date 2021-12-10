@@ -69,6 +69,9 @@ const routes = [
     path: "/browse",
     name: "Browse",
     component: Browse,
+    meta: {
+      requireLogin: true,
+    },
   },
   {
     path: "/cart",
