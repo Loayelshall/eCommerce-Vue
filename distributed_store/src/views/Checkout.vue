@@ -192,9 +192,19 @@ export default {
             console.log(response);
             this.$store.commit("clearCart");
             for (let res in response.data) {
-              console.log(response.data[res])
-              console.log(Object.prototype.hasOwnProperty.call(response.data[res], "response"))
-              if (Object.prototype.hasOwnProperty.call(response.data[res], "response")) {
+              console.log(response.data[res]);
+              console.log(
+                Object.prototype.hasOwnProperty.call(
+                  response.data[res],
+                  "response"
+                )
+              );
+              if (
+                Object.prototype.hasOwnProperty.call(
+                  response.data[res],
+                  "response"
+                )
+              ) {
                 toast({
                   message: `${response.data[res].response}`,
                   type: "is-danger",

@@ -54,17 +54,8 @@
               <a class="navbar-item" href="/report"> Report </a>
             </template>
 
-            <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link"> More </a>
-
-              <div class="navbar-dropdown">
                 <a class="navbar-item" href="/about"> About </a>
-                <a class="navbar-item"> Jobs </a>
-                <a class="navbar-item"> Contact </a>
-                <hr class="navbar-divider" />
-                <a class="navbar-item"> Report an issue </a>
-              </div>
-            </div>
+            
           </div>
         </div>
         <div class="navbar-end">
@@ -100,10 +91,10 @@
     <section class="">
       <router-view />
     </section>
-    <!-- 
+    
     <footer class="footer">
       <p class="has-text-centered">Copyright (c) 2021</p>
-    </footer> -->
+    </footer>
   </div>
 </template>
 

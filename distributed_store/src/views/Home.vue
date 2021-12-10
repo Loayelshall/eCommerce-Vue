@@ -3,20 +3,22 @@
     <section class="hero is-medium is-dark mb-6">
       <div class="hero-body has-text-centered">
         <p class="title mb-6">Welcome to eCommerce</p>
-        <p class="subtitle">The Subtitle</p>
+        <p class="subtitle">Lorem ipsum dolor sit amet.</p>
       </div>
     </section>
 
-    <div class="columns is-multiline">
+    <div class="columns is-multiline m-5">
       <div class="column is-12">
         <h2 class="is-size-2 has-text-centered">Latest products</h2>
       </div>
 
+      
       <ProductBox
         v-for="product in latestProducts"
         v-bind:key="product.id"
         v-bind:product="product"
       />
+
     </div>
   </div>
 </template>
@@ -57,7 +59,8 @@ export default {
               i
             ].url = `/products/${this.latestProducts[i].id}/`;
           }
-          console.log(response);
+          this.latestProducts.splice(5, this.latestProducts.length - 6);
+          // console.log(response);
         })
         .catch((error) => {
           console.log(error);
@@ -82,6 +85,7 @@ export default {
               i
             ].url = `/products/${this.latestProducts[i].id}/`;
           }
+          this.latestProducts.splice(5, this.latestProducts.length - 6);
           console.log(response);
         })
         .catch((error) => {
