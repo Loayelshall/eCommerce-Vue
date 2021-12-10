@@ -9,6 +9,7 @@ import Account from "../views/Account.vue";
 import Checkout from "../views/Checkout.vue";
 import Search from "../views/Search";
 import Cart from "../views/Cart.vue";
+import Browse from "../views/Browse.vue"
 import PersonalStore from "../views/PersonalStore.vue";
 const routes = [
   {
@@ -67,7 +68,7 @@ const routes = [
   {
     path: "/browse",
     name: "Browse",
-    component: Search,
+    component: Browse,
   },
   {
     path: "/cart",
