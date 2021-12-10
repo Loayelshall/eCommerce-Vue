@@ -112,6 +112,7 @@ export default {
   mounted() {
     document.title = "Checkout | E-Commerce";
     this.cart = this.$store.state.cart;
+    console.log(JSON.stringify(this.cart.items));
   },
   methods: {
     getItemTotal(item) {
@@ -133,7 +134,7 @@ export default {
         this.errors.push("Address is required");
         allPurchased = false;
       }
-      if (!this.errors.length) {
+      if (allPurchased) {
         console.log("purchasing");
         for (let i = 0; i < this.cart.items.length; i++) {
           let cust = {
@@ -160,7 +161,15 @@ export default {
             })
             .catch((error) => {
               allPurchased = false;
-              console.log(error);
+              console.log(this.cart.items[i].product.name);
+              toast({
+                message: `${this.cart.items[i].product.name} ${error.response.data.response}`,
+                type: "is-danger",
+                duration: 5000,
+                position: "top-center",
+                dissmissable: true,
+                pauseOnHover: true,
+              });
             });
         }
         if (allPurchased) {
@@ -169,8 +178,8 @@ export default {
         }
       }
     },
+
     gift() {
-      const items = [];
       this.Gifterrors = [];
       if (this.Giftname === "") {
         this.Gifterrors.push("E-mail is required");
@@ -178,12 +187,12 @@ export default {
       if (!this.Gifterrors.length) {
         console.log("purchasing");
         const data = {
-          Email: this.Giftname,
-          items: items,
+          email: this.Giftname,
+          items: this.cart.items,
         };
+        console.log(JSON.stringify(data));
         axios
           .post("/api/v1/gifts/", data)
-          //order/email
           .then((response) => {
             console.log(response);
             this.$store.commit("clearCart");
@@ -199,6 +208,14 @@ export default {
           })
           .catch((error) => {
             console.log(error);
+            toast({
+              message: `${error.response.data}`,
+              type: "is-danger",
+              duration: 5000,
+              position: "top-center",
+              dissmissable: true,
+              pauseOnHover: true,
+            });
           });
       }
     },

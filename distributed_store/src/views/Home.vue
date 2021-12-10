@@ -23,6 +23,7 @@
 
 <script>
 import axios from "axios";
+import { toast } from "bulma-toast";
 import ProductBox from "../components/ProductBox.vue";
 export default {
   name: "Home",
@@ -54,6 +55,14 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          toast({
+            message: `${error.response.data}`,
+            type: "is-danger",
+            duration: 5000,
+            position: "top-center",
+            dissmissable: true,
+            pauseOnHover: true,
+          });
         });
       //this.$store.commit('setLoading',false)
     },

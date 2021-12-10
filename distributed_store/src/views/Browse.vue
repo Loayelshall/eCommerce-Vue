@@ -15,11 +15,38 @@
             <img v-bind:src="product.image_thumbnail" />
           </figure>
           <h3 class="is-size-4">{{ product.name }}</h3>
+          <h3 class="is-size-4">Price</h3>
           <p class="is-size-6 has-text-grey">${{ product.price }}</p>
+          <h3 class="is-size-4">Sold By</h3>
+          <p class="is-size-6 has-text-grey">{{ product.owner_name }}</p>
+          <h3 class="is-size-4">Quantity</h3>
+          <p class="is-size-6 has-text-grey">{{ product.no_of_pieces }}</p>
           <router-link v-bind:to="product.url" class="button is-dark mt-4">
             View
           </router-link>
         </div>
+      </div>
+    </div>
+    <h1 class="title">shared items</h1>
+    <div
+      class="column is-3"
+      v-for="share in shares"
+      v-bind:key="share.product.id"
+    >
+      <div class="box" v-if="share.product.on_sale">
+        <figure class="image mb-4">
+          <img v-bind:src="share.product.image_thumbnail" />
+        </figure>
+        <h3 class="is-size-4">{{ share.product.name }}</h3>
+        <h3 class="is-size-4">Price</h3>
+        <p class="is-size-6 has-text-grey">${{ share.product.price }}</p>
+        <h3 class="is-size-4">Sold By</h3>
+        <p class="is-size-6 has-text-grey">{{ share.share_holder }}</p>
+        <h3 class="is-size-4">Quantity</h3>
+        <p class="is-size-6 has-text-grey">{{ share.product.no_of_pieces }}</p>
+        <router-link v-bind:to="share.url" class="button is-dark mt-4">
+          View
+        </router-link>
       </div>
     </div>
   </div>
@@ -37,14 +64,16 @@ export default {
   data() {
     return {
       products: [],
+      shares: [],
     };
   },
   mounted() {
     this.getCategory();
+    this.getShared();
     document.title = "Browse | eCommerce";
   },
   methods: {
-    async getCategory() {
+    getCategory() {
       //this.$store.commit('setIsLoading', true)
       axios.get(`api/v1/products/shop`).then((response) => {
         this.products = response.data;
@@ -52,7 +81,20 @@ export default {
           this.products[i].url = `/products/${this.products[i].id}/`;
         }
       });
+
       //this.$store.commit('setIsLoading', false)
+    },
+    getShared() {
+      axios.get(`api/v1/shares`).then((response) => {
+        this.shares = response.data;
+        console.log(response.data);
+        for (let i = 0; i < this.shares.length; i++) {
+          this.shares[i].url = `/products/${this.shares[i].product.id}/`;
+        }
+      });
+      // .catch(error=>{
+
+      // });
     },
   },
 };

@@ -43,27 +43,17 @@
             <div class="column is-6 field">
               <label>Product Price</label>
               <div class="control">
-                <input
-                  type="number"
-                  class="input"
-                  v-model="itemPrice"
-                  min="0"
-                />
+                <input type="number" class="input" v-model="itemPrice" />
               </div>
             </div>
             <div class="column is-6 field">
               <label>Product Amount</label>
               <div class="control">
-                <input
-                  type="number"
-                  class="input"
-                  v-model="itemAmount"
-                  min="0"
-                />
+                <input type="number" class="input" v-model="itemAmount" />
               </div>
             </div>
             <div class="column is-6 field">
-              <label>Public</label>
+              <label>For Sale</label>
               <div class="control">
                 <input type="radio" value="1" v-model="itemOnSale" />
                 <label> Yes</label>
@@ -145,7 +135,7 @@
                 <th>Quantity</th>
                 <th>Description</th>
                 <th>Category</th>
-                <th>Public</th>
+                <th>For Sale</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -234,7 +224,6 @@
                                 type="number"
                                 class="input"
                                 v-model="editedItemPrice"
-                                min="0"
                               />
                             </div>
                           </div>
@@ -245,12 +234,11 @@
                                 type="number"
                                 class="input"
                                 v-model="editedItemAmount"
-                                min="0"
                               />
                             </div>
                           </div>
                           <div class="column is-6 field">
-                            <label>Public</label>
+                            <label>For Sale</label>
                             <div class="control">
                               <input
                                 type="radio"
@@ -336,7 +324,7 @@
                   <th>Quantity</th>
                   <th>Description</th>
                   <th>Category</th>
-                  <th>Public</th>
+                  <th>For Sale</th>
                 </tr>
               </thead>
               <tbody>
@@ -414,8 +402,8 @@ export default {
           "Item description must be at least 5 characters long"
         );
       }
-      if (this.itemAmount < 1) {
-        this.errorsItem.push("Item amount must be at least 1");
+      if (this.itemAmount < 0) {
+        this.errorsItem.push("Item amount must be at least 0");
       }
       if (this.errorsItem.length == 0) {
         axios
@@ -450,6 +438,14 @@ export default {
           })
           .catch((error) => {
             console.log(error);
+            toast({
+              message: `${error.response.data}`,
+              type: "is-danger",
+              duration: 5000,
+              position: "top-center",
+              dissmissable: true,
+              pauseOnHover: true,
+            });
           });
       }
     },
@@ -471,8 +467,8 @@ export default {
           "Item description must be at least 5 characters long"
         );
       }
-      if (this.editedItemAmount < 1) {
-        this.editedErrorsItem.push("Item amount must be at least 1");
+      if (this.editedItemAmount < 0) {
+        this.editedErrorsItem.push("Item amount must be at least 0");
       }
       if (this.editedErrorsItem.length == 0) {
         axios
@@ -499,6 +495,14 @@ export default {
           })
           .catch((error) => {
             console.log(error);
+            toast({
+              message: `${error.response.data}`,
+              type: "is-danger",
+              duration: 5000,
+              position: "top-center",
+              dissmissable: true,
+              pauseOnHover: true,
+            });
           });
       }
     },
@@ -510,6 +514,14 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          toast({
+            message: `${error.response.data}`,
+            type: "is-danger",
+            duration: 5000,
+            position: "top-center",
+            dissmissable: true,
+            pauseOnHover: true,
+          });
         });
     },
     getProducts() {
@@ -520,6 +532,14 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          toast({
+            message: `${error.response.data}`,
+            type: "is-danger",
+            duration: 5000,
+            position: "top-center",
+            dissmissable: true,
+            pauseOnHover: true,
+          });
         });
     },
     getSoldProducts() {
@@ -541,6 +561,14 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          toast({
+            message: `${error.response.data}`,
+            type: "is-danger",
+            duration: 5000,
+            position: "top-center",
+            dissmissable: true,
+            pauseOnHover: true,
+          });
         });
     },
     getSharedProducts() {
@@ -552,6 +580,14 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          toast({
+            message: `${error.response.data}`,
+            type: "is-danger",
+            duration: 5000,
+            position: "top-center",
+            dissmissable: true,
+            pauseOnHover: true,
+          });
         });
     },
     changeName(id) {
@@ -569,6 +605,14 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          toast({
+            message: `${error.response.data}`,
+            type: "is-danger",
+            duration: 5000,
+            position: "top-center",
+            dissmissable: true,
+            pauseOnHover: true,
+          });
         });
     },
     displayModal(id, toggle, product) {

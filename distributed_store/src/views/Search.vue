@@ -42,6 +42,7 @@
 <script>
 import axios from "axios";
 import ProductBox from "../components/ProductBox.vue";
+import { toast } from "bulma-toast";
 
 export default {
   name: "Search",
@@ -73,6 +74,14 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          toast({
+            message: `${error.response.data}`,
+            type: "is-danger",
+            duration: 5000,
+            position: "top-center",
+            dissmissable: true,
+            pauseOnHover: true,
+          });
         });
     },
   },

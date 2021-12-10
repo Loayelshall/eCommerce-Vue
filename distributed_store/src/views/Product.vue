@@ -12,6 +12,10 @@
       <div class="column is-3">
         <h2 class="subtitle">{{ product.description }}</h2>
         <p><strong>Price:</strong>${{ product.price }}</p>
+        <h3 class="is-size-4">Sold By</h3>
+        <p class="is-size-6 has-text-grey">{{ product.owner_name }}</p>
+        <h3 class="is-size-4">Quantity</h3>
+        <p class="is-size-6 has-text-grey">{{ product.no_of_pieces }}</p>
         <div class="field has-addons mt-6">
           <div class="control">
             <input type="number" class="input" min="1" v-model="quantity" />
@@ -52,10 +56,19 @@ export default {
         .get(`/api/v1/products/${product_slug}`)
         .then((response) => {
           this.product = response.data;
+          console.log(response.data);
           document.title = this.product.name + " | E-Commerce";
         })
         .catch((error) => {
           console.log(error);
+          toast({
+            message: `${error.response.data}`,
+            type: "is-danger",
+            duration: 5000,
+            position: "top-center",
+            dissmissable: true,
+            pauseOnHover: true,
+          });
         });
     },
     addToCart() {
@@ -66,16 +79,28 @@ export default {
         product: this.product,
         quantity: this.quantity,
       };
-      this.$store.commit("addToCart", item);
 
-      toast({
-        message: "Added to cart",
-        type: "is-success",
-        dismissible: true,
-        pauseOnHover: true,
-        duration: 2000,
-        position: "bottom-right",
-      });
+      if (this.item.quantity < this.item.product.quantity) {
+        this.$store.commit("addToCart", item);
+
+        toast({
+          message: "Added to cart",
+          type: "is-success",
+          dismissible: true,
+          pauseOnHover: true,
+          duration: 2000,
+          position: "bottom-right",
+        });
+      } else {
+        toast({
+          message: "Quantity is not available",
+          type: "is-danger",
+          dismissible: true,
+          pauseOnHover: true,
+          duration: 2000,
+          position: "bottom-right",
+        });
+      }
     },
     Share() {
       if (isNaN(this.quantity) || this.quantity < 1) {

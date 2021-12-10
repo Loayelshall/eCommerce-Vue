@@ -226,6 +226,7 @@ export default {
           })
           .then((response) => {
             console.log(response);
+            this.getInfo();
             toast({
               message: `$${this.sendCash} sent to ${this.emailCash}`,
               type: "is-success",
@@ -238,7 +239,15 @@ export default {
             this.emailCash = "";
           })
           .catch((error) => {
-            console.log(error);
+            console.log(error.response.data);
+            toast({
+              message: `${error.response.data.response}`,
+              type: "is-danger",
+              duration: 5000,
+              position: "top-center",
+              dissmissable: true,
+              pauseOnHover: true,
+            });
           });
       } else {
         this.transErrors = ["Please enter a valid amount and email"];
@@ -274,6 +283,14 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          toast({
+            message: `${error.response.data}`,
+            type: "is-danger",
+            duration: 5000,
+            position: "top-center",
+            dissmissable: true,
+            pauseOnHover: true,
+          });
         });
     },
     getOrders() {
@@ -285,6 +302,14 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          toast({
+            message: `${error.response.data}`,
+            type: "is-danger",
+            duration: 5000,
+            position: "top-center",
+            dissmissable: true,
+            pauseOnHover: true,
+          });
         });
     },
     submitForm() {
@@ -301,25 +326,14 @@ export default {
           })
           .catch((error) => {
             console.log(error);
-          });
-      } else {
-        this.errors = ["Please enter a valid amount"];
-      }
-    },
-    sendcash() {
-      this.errors = [];
-      if (this.sendCash > 0) {
-        axios
-          .post("/api/v1/profile/deposit/", {
-            value: this.sendCash,
-          })
-          .then((response) => {
-            this.sendCash = 0;
-            console.log(response);
-            this.getInfo();
-          })
-          .catch((error) => {
-            console.log(error);
+            toast({
+              message: `${error.response.data}`,
+              type: "is-danger",
+              duration: 5000,
+              position: "top-center",
+              dissmissable: true,
+              pauseOnHover: true,
+            });
           });
       } else {
         this.errors = ["Please enter a valid amount"];
@@ -343,6 +357,14 @@ export default {
           })
           .catch((error) => {
             console.log(error);
+            toast({
+              message: `${error.response.data}`,
+              type: "is-danger",
+              duration: 5000,
+              position: "top-center",
+              dissmissable: true,
+              pauseOnHover: true,
+            });
           });
       }
     },
