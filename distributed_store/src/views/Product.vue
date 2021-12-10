@@ -79,29 +79,22 @@ export default {
           this.product = response.data;
           document.title = this.product.name + " | E-Commerce";
 
-
-
           this.shared = this.$route.query.shared;
 
-                    if(!this.shared){
-                    const id = {
-                      product: this.product.id
-                    }
-                    console.log(this.product)
-                    console.log(this.product.id)
+          if (!this.shared) {
+            const id = {
+              product: this.product.id,
+            };
+            console.log(this.product);
+            console.log(this.product.id);
 
-                    axios.post("/api/v1/products/checkShared/",id)
-                    .then((response) => {
-
-                      this.shared = response.data.shared;
-                    })
-                    .catch(error=>
-                      console.log(error)
-                    )}
-
-
-
-
+            axios
+              .post("/api/v1/products/checkShared/", id)
+              .then((response) => {
+                this.shared = response.data.shared;
+              })
+              .catch((error) => console.log(error));
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -115,8 +108,6 @@ export default {
           });
         });
     },
-
-
 
     // getshare() {
     //   this.shared = this.$route.query.shared;
@@ -135,9 +126,6 @@ export default {
     //   console.log(error.data))
     //   }
     // },
-
-
-
 
     addToCart() {
       if (isNaN(this.quantity) || this.quantity < 1) {
@@ -179,7 +167,7 @@ export default {
       };
 
       axios.post("/api/v1/shares/", item).then((response) => {
-        console.log(response)
+        console.log(response);
         this.$router.push("/");
         toast({
           message: "Shared",

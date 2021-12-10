@@ -54,8 +54,7 @@
               <a class="navbar-item" href="/report"> Report </a>
             </template>
 
-                <a class="navbar-item" href="/about"> About </a>
-            
+            <a class="navbar-item" href="/about"> About </a>
           </div>
         </div>
         <div class="navbar-end">
@@ -91,7 +90,7 @@
     <section class="">
       <router-view />
     </section>
-    
+
     <footer class="footer">
       <p class="has-text-centered">Copyright (c) 2021</p>
     </footer>

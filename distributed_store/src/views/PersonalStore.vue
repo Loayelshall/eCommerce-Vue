@@ -341,15 +341,15 @@
                   <td>{{ currProduct.product.on_sale }}</td>
                   <td>
                     <div class="field has-addons">
-                    <p class="control">
-                      <button
-                        class="button is-danger"
-                        @click="deleteShare(currProduct.id)"
-                      >
-                        Delete
-                      </button>
-                    </p>
-                  </div>
+                      <p class="control">
+                        <button
+                          class="button is-danger"
+                          @click="deleteShare(currProduct.id)"
+                        >
+                          Delete
+                        </button>
+                      </p>
+                    </div>
                   </td>
                 </tr>
               </tbody>
@@ -451,7 +451,7 @@ export default {
           })
           .catch((error) => {
             console.log(error);
-            console.log(error.response.data)
+            console.log(error.response.data);
             toast({
               message: `${error.response.data}`,
               type: "is-danger",
@@ -509,7 +509,7 @@ export default {
           })
           .catch((error) => {
             console.log(error);
-            console.log(error.response.data)
+            console.log(error.response.data);
             toast({
               message: `${error.response.data}`,
               type: "is-danger",
@@ -529,7 +529,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          console.log(error.response.data)
+          console.log(error.response.data);
           toast({
             message: `${error.response.data}`,
             type: "is-danger",
@@ -596,8 +596,8 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          console.log(error.response.data)
-          this.sharedProducts =""
+          console.log(error.response.data);
+          this.sharedProducts = "";
         });
     },
     changeName(id) {
@@ -615,7 +615,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          console.log(error.response.data)
+          console.log(error.response.data);
           toast({
             message: `${error.response.data}`,
             type: "is-danger",
@@ -641,8 +641,8 @@ export default {
         document.getElementById(id).classList.remove("is-active");
       }
     },
-      deleteShare(id){
-        axios
+    deleteShare(id) {
+      axios
         .delete(`/api/v1/shares/${id}/`)
         .then((response) => {
           console.log(response);
@@ -650,7 +650,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          console.log(error.response.data.detail)
+          console.log(error.response.data.detail);
           toast({
             message: `${error.response.data.detail}`,
             type: "is-danger",
@@ -660,7 +660,7 @@ export default {
             pauseOnHover: true,
           });
         });
-  },
+    },
   },
 };
 </script>

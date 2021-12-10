@@ -47,9 +47,6 @@
             <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
           </div>
 
-
-
-
           <div class="field">
             <div class="control">
               <button class="button is-dark">Register</button>
@@ -74,7 +71,7 @@ export default {
     return {
       username: "",
       Email: "",
-      Sex:"",
+      Sex: "",
       password: "",
       password_confirmation: "",
       errors: [],
@@ -98,7 +95,7 @@ export default {
       if (this.password !== this.password_confirmation) {
         this.errors.push("Passwords do not match");
       }
-      if (this.Sex ==="") {
+      if (this.Sex === "") {
         this.errors.push("Gender is missing");
       }
       if (!this.errors.length) {
@@ -106,7 +103,7 @@ export default {
           username: this.username,
           email: this.Email,
           password: this.password,
-          sex: this.Sex
+          sex: this.Sex,
         };
         axios
           .post("/api/v1/users/", formData)
