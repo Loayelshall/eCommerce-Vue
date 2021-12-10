@@ -90,15 +90,18 @@
         </div>
         <hr />
         <div class="box">
-          <button class="button is-dark" @click="toggle('addCash', 'sendCash')">
-            Add Cash
-          </button>
-          <button
-            class="button is-dark ml-4"
-            @click="toggle('sendCash', 'addCash')"
-          >
-            Send Cash
-          </button>
+          <div class="field has-addons">
+            <p class="control">
+              <button class="button" @click="toggle('addCash', 'sendCash')">
+                Add Cash
+              </button>
+            </p>
+            <p class="control">
+              <button class="button" @click="toggle('sendCash', 'addCash')">
+                Send Cash
+              </button>
+            </p>
+          </div>
 
           <form id="addCash" hidden @submit.prevent="submitForm">
             <div class="field">
@@ -147,12 +150,35 @@
 
       <div class="column is-12">
         <h2 class="subtitle">My Orders</h2>
-
+        <!-- 
         <OrderSummary
           v-for="order in orders"
           v-bind:key="order.id"
           v-bind:order="order"
-        />
+        /> -->
+
+        <div class="box mb-4" v-for="order in orders" v-bind:key="order.id">
+          <h3 class="is-size-4 mb-6">Order #{{ order.id }}</h3>
+          <h4 class="is-size-5">Products</h4>
+          <table class="table is-fullwidth">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ order.product.name }}</td>
+                <td>${{ order.product.price }}</td>
+                <td>{{ order.amount }}</td>
+                <td>${{ order.amount * order.product.price }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -161,12 +187,12 @@
 <script>
 import axios from "axios";
 import { toast } from "bulma-toast";
-import OrderSummary from "../components/OrderSummary.vue";
+// import OrderSummary from "../components/OrderSummary.vue";
 export default {
   name: "Account",
-  components: {
-    OrderSummary,
-  },
+  // components: {
+  //   OrderSummary,
+  // },
   data() {
     return {
       orders: [],
