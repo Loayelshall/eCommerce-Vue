@@ -32,9 +32,23 @@
               />
             </div>
           </div>
+          <div class="field">
+            <label>Gender</label>
+            <div class="control">
+              <div class="select is-fullwidth">
+                <select v-model="Sex">
+                  <option value="F">Female</option>
+                  <option value="M">Male</option>
+                </select>
+              </div>
+            </div>
+          </div>
           <div class="notification is-danger" v-if="errors.length">
             <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
           </div>
+
+
+
 
           <div class="field">
             <div class="control">
@@ -60,6 +74,7 @@ export default {
     return {
       username: "",
       Email: "",
+      Sex:"",
       password: "",
       password_confirmation: "",
       errors: [],
@@ -83,11 +98,15 @@ export default {
       if (this.password !== this.password_confirmation) {
         this.errors.push("Passwords do not match");
       }
+      if (this.Sex ==="") {
+        this.errors.push("Gender is missing");
+      }
       if (!this.errors.length) {
         const formData = {
           username: this.username,
           email: this.Email,
           password: this.password,
+          sex: this.Sex
         };
         axios
           .post("/api/v1/users/", formData)

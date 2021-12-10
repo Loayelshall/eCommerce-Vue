@@ -94,6 +94,9 @@ export default {
     },
     getshare() {
       this.shared = this.$route.query.shared;
+      
+
+
       console.log(this.$route.query.shared);
     },
     addToCart() {

@@ -438,6 +438,7 @@ export default {
           })
           .catch((error) => {
             console.log(error);
+            console.log(error.response.data)
             toast({
               message: `${error.response.data}`,
               type: "is-danger",
@@ -495,6 +496,7 @@ export default {
           })
           .catch((error) => {
             console.log(error);
+            console.log(error.response.data)
             toast({
               message: `${error.response.data}`,
               type: "is-danger",
@@ -514,6 +516,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          console.log(error.response.data)
           toast({
             message: `${error.response.data}`,
             type: "is-danger",
@@ -560,9 +563,9 @@ export default {
           }
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response.data.response);
           toast({
-            message: `${error.response.data}`,
+            message: `${error.response.data.response}`,
             type: "is-danger",
             duration: 5000,
             position: "top-center",
@@ -580,8 +583,9 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          console.log(error.response.data)
           toast({
-            message: `${error.response.data}`,
+            message: `${error.response.data.response}`,
             type: "is-danger",
             duration: 5000,
             position: "top-center",
@@ -605,6 +609,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          console.log(error.response.data)
           toast({
             message: `${error.response.data}`,
             type: "is-danger",
