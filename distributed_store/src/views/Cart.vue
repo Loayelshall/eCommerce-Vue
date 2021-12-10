@@ -1,6 +1,6 @@
 <template>
-  <div class="page-cart">
-    <div class="columns is-multiline">
+  <div class="page-cart m-5">
+    <div class="columns is-multiline m-5">
       <div class="column is-12">
         <h1 class="title">Cart</h1>
       </div>

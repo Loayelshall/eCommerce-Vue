@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper m-4">
+  <div class="wrapper m-5">
     <div class="page-header">
       <div class="md-layout">
         <div class="md-layout-item">
