@@ -12,6 +12,7 @@ import Cart from "../views/Cart.vue";
 import Browse from "../views/Browse.vue";
 import PersonalStore from "../views/PersonalStore.vue";
 import Report from "../views/Report.vue";
+import Gift from "../views/Gift.vue";
 const routes = [
   {
     path: "/",
@@ -32,6 +33,14 @@ const routes = [
     path: "/account",
     name: "Account",
     component: Account,
+    meta: {
+      requireLogin: true,
+    },
+  },
+  {
+    path: "/gift",
+    name: "Gift",
+    component: Gift,
     meta: {
       requireLogin: true,
     },

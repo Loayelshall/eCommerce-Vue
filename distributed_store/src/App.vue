@@ -51,6 +51,7 @@
               <router-link to="/personalStore" class="navbar-item">
                 My Store
               </router-link>
+              <router-link to="/gift" class="navbar-item"> Gift </router-link>
               <a class="navbar-item" href="/report"> Report </a>
             </template>
 
