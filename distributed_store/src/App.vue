@@ -73,7 +73,7 @@
                 </router-link>
               </template>
               <template v-else>
-                <a class="button is-link" href="/register">
+                <a class="button is-info" href="/register">
                   <strong>Register</strong>
                 </a>
                 <a class="button is-white" href="/login">Login</a>
