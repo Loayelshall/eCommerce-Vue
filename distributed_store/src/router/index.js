@@ -109,7 +109,7 @@ const routes = [
     },
   },
   {
-    path: "/gifts/:product_slug",
+    path: "/gift/:product_slug/:gift_slug",
     name: "GiftProduct",
     component: GiftProduct,
     meta: {

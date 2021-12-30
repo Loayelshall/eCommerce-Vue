@@ -1,13 +1,13 @@
 <template>
   <div class="home">
-    <section class="hero is-medium is-dark mb-6">
+    <section class="hero is-medium is-light mb-6">
       <div class="hero-body has-text-centered">
         <p class="title mb-6">Welcome to eCommerce</p>
         <p class="subtitle">Lorem ipsum dolor sit amet.</p>
       </div>
     </section>
 
-    <div class="columns is-multiline m-5">
+    <div class="columns is-multiline mt-3 m-5">
       <div class="column is-12">
         <h2 class="is-size-2 has-text-centered">Latest products</h2>
       </div>

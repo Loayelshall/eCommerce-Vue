@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid" id="wrapper">
-    <nav class="navbar" role="navigation" aria-label="main navigation">
+    <nav class="navbar is-light" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <a class="navbar-item" href="/">
           <strong>eCommerce</strong>
@@ -38,7 +38,7 @@
                 />
               </div>
               <div class="control">
-                <button class="button is-success" @click="search">
+                <button class="button is-info" @click="search">
                   <span class="material-icons"> search </span>
                 </button>
               </div>
@@ -66,9 +66,9 @@
                   My Account
                 </router-link>
                 <form @submit="logout">
-                  <button class="button is-light">Logout</button>
+                  <button class="button is-white">Logout</button>
                 </form>
-                <router-link to="/cart" class="button is-success ml-2">
+                <router-link to="/cart" class="button is-info ml-2">
                   <span>Cart ({{ cartTotalLength }}) </span>
                 </router-link>
               </template>
@@ -76,7 +76,7 @@
                 <a class="button is-primary" href="/register">
                   <strong>Register</strong>
                 </a>
-                <a class="button is-light" href="/login">Login</a>
+                <a class="button is-white" href="/login">Login</a>
               </template>
             </div>
           </div>
@@ -84,17 +84,9 @@
       </div>
     </nav>
 
-    <!-- <div class="is-loading-bar has-text-centered" v-bind:class="{'is-loading':$store.state.isLoading}">
-      <div class="lds-dual-ring"></div>
-    </div> -->
-
     <section class="">
       <router-view />
     </section>
-
-    <footer class="footer">
-      <p class="has-text-centered">Copyright (c) 2021</p>
-    </footer>
   </div>
 </template>
 

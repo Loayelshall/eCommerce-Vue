@@ -63,54 +63,6 @@
               </div>
             </div>
 
-            <!-- <div class="column is-6 field">
-              <div class="control">
-                <div class="file is-info has-name">
-                  <label class="file-label">
-                    <input
-                      accept="image/*"
-                      id="photo"
-                      class="file-input"
-                      type="file"
-                      @change="changeName('photo')"
-                    />
-                    <span class="file-cta">
-                      <span class="file-icon">
-                        <i class="fas fa-upload"></i>
-                      </span>
-                      <span class="file-label"> Upload Photo </span>
-                    </span>
-                    <span class="file-name">
-                      <label id="photolabel">Upload</label>
-                    </span>
-                  </label>
-                </div>
-              </div>
-              <br />
-              <div class="control">
-                <div class="file is-info has-name">
-                  <label class="file-label">
-                    <input
-                      accept="image/*"
-                      id="Thumbnail"
-                      class="file-input"
-                      type="file"
-                      @change="changeName('Thumbnail')"
-                    />
-                    <span class="file-cta">
-                      <span class="file-icon">
-                        <i class="fas fa-upload"></i>
-                      </span>
-                      <span class="file-label"> Upload Thumbnail </span>
-                    </span>
-                    <span class="file-name">
-                      <label id="Thumbnaillabel">Upload</label>
-                    </span>
-                  </label>
-                </div>
-              </div>
-            </div> -->
-
             <div class="notification is-danger" v-if="errorsItem.length">
               <p v-for="error in errorsItem" v-bind:key="error">{{ error }}</p>
             </div>

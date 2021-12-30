@@ -15,7 +15,7 @@
             />
           </div>
           <div class="control">
-            <button class="button is-success" @click="search">
+            <button class="button is-info" @click="search">
               <span class="material-icons"> search </span>
             </button>
           </div>

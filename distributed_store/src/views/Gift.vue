@@ -13,9 +13,6 @@
             To: <b>{{ item.receiver.username }}</b>
           </h3>
           <h3 class="is-size-4">
-            Date Gifted: <b>{{ item.order.date_added }}</b>
-          </h3>
-          <h3 class="is-size-4">
             Amount: <b>{{ item.order.amount }}</b>
           </h3>
           <router-link
@@ -46,13 +43,16 @@ export default {
   methods: {
     getGifts() {
       axios
-        .get("/api/v1/gifts/",{params:{type :"sent"}})
+        .get("/api/v1/gifts/", { params: { type: "sent" } })
         .then((response) => {
           console.log(response);
           this.gifts = response.data;
           for (var i = 0; i < this.gifts.length; i++) {
             this.gifts[i].order.product =
-              "/gifts/" + this.gifts[i].order.product + "/?quantity=" + this.gifts[i].order.quantity;
+              "/gift/" +
+              this.gifts[i].order.product +
+              "/" +
+              this.gifts[i].order.id;
           }
         })
         .catch((error) => {

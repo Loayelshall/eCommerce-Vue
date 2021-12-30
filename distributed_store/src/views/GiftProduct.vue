@@ -17,6 +17,7 @@
               <div class="card-footer-item">
                 <div class="field has-addons mt-6">
                   <div class="control">
+                    <label for="">Quantity</label>
                     <input
                       type="number"
                       class="input"
@@ -24,11 +25,10 @@
                       disabled
                       v-model="quantity"
                     />
-                  </div>                  
+                  </div>
                 </div>
               </div>
-              
-            </div>            
+            </div>
           </div>
         </div>
       </div>
@@ -51,36 +51,26 @@ export default {
   },
   mounted() {
     this.getProduct();
-    this.quantity = this.$route.params.quantity;
-    // this.getshare();
+    document.title = "Gift Details | E-Commerce";
   },
   methods: {
     async getProduct() {
       //this.$store.commit('setIsLoading',true)
       const product_slug = this.$route.params.product_slug;
+      const gift_slug = this.$route.params.gift_slug;
 
+      axios
+        .get(`/api/v1/gifts/${gift_slug}`)
+        .then((response) => {
+          this.quantity = response.data.order.amount;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       axios
         .get(`/api/v1/products/${product_slug}`)
         .then((response) => {
           this.product = response.data;
-          document.title = this.product.name + " | E-Commerce";
-
-          this.shared = this.$route.query.shared;
-
-          if (!this.shared) {
-            const id = {
-              product: this.product.id,
-            };
-            console.log(this.product);
-            console.log(this.product.id);
-
-            axios
-              .post("/api/v1/products/checkShared/", id)
-              .then((response) => {
-                this.shared = response.data.shared;
-              })
-              .catch((error) => console.log(error));
-          }
         })
         .catch((error) => {
           console.log(error);
@@ -93,77 +83,6 @@ export default {
             pauseOnHover: true,
           });
         });
-    },
-
-    // getshare() {
-    //   this.shared = this.$route.query.shared;
-    //   console.log(this.product)
-    //   if(!this.shared){
-    //   const id = {
-    //     product: this.product.id
-    //   }
-    //   console.log(id)
-    //   axios.post("/api/v1/products/checkShared/",id)
-    //   .then((response) => {
-    //     console.log(response);
-    //     this.shared = response.shared;
-    //   })
-    //   .catch(error=>
-    //   console.log(error.data))
-    //   }
-    // },
-
-    addToCart() {
-      if (isNaN(this.quantity) || this.quantity < 1) {
-        this.quantity = 1;
-      }
-      const item = {
-        product: this.product,
-        quantity: this.quantity,
-      };
-
-      // if (this.item.quantity < this.item.product.quantity) {
-      this.$store.commit("addToCart", item);
-
-      toast({
-        message: "Added to cart",
-        type: "is-success",
-        dismissible: true,
-        pauseOnHover: true,
-        duration: 2000,
-        position: "bottom-right",
-      });
-      // } else {
-      //   toast({
-      //     message: "Quantity is not available",
-      //     type: "is-danger",
-      //     dismissible: true,
-      //     pauseOnHover: true,
-      //     duration: 2000,
-      //     position: "bottom-right",
-      //   });
-      // }
-    },
-    Share() {
-      if (isNaN(this.quantity) || this.quantity < 1) {
-        this.quantity = 1;
-      }
-      const item = {
-        product: this.product.id,
-      };
-
-      axios.post("/api/v1/shares/", item).then((response) => {
-        console.log(response);
-        this.$router.push("/");
-        toast({
-          message: "Shared",
-          type: "is-success",
-          dismissible: true,
-          pauseOnHover: true,
-          duration: 2000,
-          position: "bottom-right",
-        });
-      });
     },
   },
 };
