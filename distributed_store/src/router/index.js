@@ -13,6 +13,7 @@ import Browse from "../views/Browse.vue";
 import PersonalStore from "../views/PersonalStore.vue";
 import Report from "../views/Report.vue";
 import Gift from "../views/Gift.vue";
+import GiftProduct from "../views/GiftProduct.vue";
 const routes = [
   {
     path: "/",
@@ -103,6 +104,14 @@ const routes = [
     path: "/products/:product_slug",
     name: "Product",
     component: Product,
+    meta: {
+      requireLogin: true,
+    },
+  },
+  {
+    path: "/gifts/:product_slug",
+    name: "GiftProduct",
+    component: GiftProduct,
     meta: {
       requireLogin: true,
     },
