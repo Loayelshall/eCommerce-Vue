@@ -46,9 +46,9 @@ export default {
   methods: {
     getGifts() {
       axios
-        .get("/api/v1/gifts/1/")
+        .get("/api/v1/gifts/")
         .then((response) => {
-          console.log(response.data);
+          console.log(response);
           this.gifts = response.data;
           for (var i = 0; i < this.gifts.length; i++) {
             this.gifts[i].order.product =
