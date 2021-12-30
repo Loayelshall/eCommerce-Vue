@@ -529,14 +529,6 @@ export default {
         })
         .catch((error) => {
           console.log(error.response.data.response);
-          toast({
-            message: `${error.response.data.response}`,
-            type: "is-danger",
-            duration: 5000,
-            position: "top-center",
-            dissmissable: true,
-            pauseOnHover: true,
-          });
         });
     },
     getSharedProducts() {
