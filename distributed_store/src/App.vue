@@ -55,7 +55,7 @@
               <a class="navbar-item" href="/report"> Report </a>
             </template>
 
-            <a class="navbar-item" href="/about"> About </a>
+            <!-- <a class="navbar-item" href="/about"> About </a> -->
           </div>
         </div>
         <div class="navbar-end">
