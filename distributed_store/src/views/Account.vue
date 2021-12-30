@@ -4,7 +4,6 @@
       <div class="column is-12">
         <h1 class="title">Account</h1>
       </div>
-
       <hr />
       <div class="column is-12">
         <h2 class="subtitle">Information</h2>
@@ -98,22 +97,16 @@
             </p>
           </div>
 
-          <form id="addCash" hidden @submit.prevent="submitForm">
-            <div class="field">
+          <div id="addCash" hidden>
+            <div>
+              <div class="m-4" id="card-element"></div>
               <label>Cash Amount</label>
-              <div class="control">
-                <input type="number " min="0" class="input" v-model="addCash" />
-              </div>
+              <input type="text" class="input w-50 m-1" v-model="cashDeposit" />
+              <button class="button" @click="checkout()">
+                Pay With Stripe
+              </button>
             </div>
-            <div class="notification is-danger" v-if="errors.length">
-              <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
-            </div>
-            <div class="field">
-              <div class="control">
-                <button class="button is-success">Add</button>
-              </div>
-            </div>
-          </form>
+          </div>
 
           <form id="sendCash" hidden @submit.prevent="transactionCash">
             <div class="field">
@@ -208,14 +201,60 @@ export default {
       editedSex: "",
       editedErrors: [],
       user_id: 0,
+      stripe: {},
+      cashDeposit: 0,
     };
   },
   mounted() {
     document.title = "Account | E-Commerce";
     this.getOrders();
     this.getInfo();
+    this.stripe = window.Stripe(
+      "pk_test_51HxF4XH3rrorsYDEJ0qATqlQHhCuKnKwUdJ9yYAFkr9KduzIiFQXW8PXoWGeqqyRZU7ESBrtCJuTvscRFfSl0llK00b0rpjnAS"
+    );
+    const elements = this.stripe.elements();
+    this.card = elements.create("card", { hidePostalCode: true });
+    this.card.mount("#card-element");
   },
   methods: {
+    checkout() {
+      this.stripe.createToken(this.card).then((result) => {
+        if (result.error) {
+          this.errors.push(
+            "Something went wrong with Stripe. Please try again"
+          );
+          console.log(result.error.message);
+        } else {
+          this.stripeTokenHandler(result.token);
+        }
+      });
+    },
+    async stripeTokenHandler(token) {
+      const data = {
+        value: this.cashDeposit,
+        stripe_token: token.id,
+      };
+      await axios
+        .post("/api/v1/profile/deposit/", data)
+        .then((response) => {
+          console.log(response);
+          toast({
+            message: "Balance charged Successfully",
+            type: "is-success",
+            dismissible: true,
+            pauseOnHover: true,
+            duration: 4000,
+            position: "top-center",
+            fullWidth: true,
+            fitToScreen: true,
+          });
+          this.addCash = 0;
+          this.getInfo();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     transactionCash() {
       this.transErrors = [];
       if (this.sendCash > 0 && this.emailCash.length > 0) {
