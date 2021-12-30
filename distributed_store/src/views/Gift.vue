@@ -46,13 +46,13 @@ export default {
   methods: {
     getGifts() {
       axios
-        .get("/api/v1/gifts/")
+        .get("/api/v1/gifts/",{params:{type :"sent"}})
         .then((response) => {
           console.log(response);
           this.gifts = response.data;
           for (var i = 0; i < this.gifts.length; i++) {
             this.gifts[i].order.product =
-              "/api/v1/products/" + this.gifts[i].order.product;
+              "/products/" + this.gifts[i].order.product;
           }
         })
         .catch((error) => {
