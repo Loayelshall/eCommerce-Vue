@@ -52,7 +52,7 @@ export default {
           this.gifts = response.data;
           for (var i = 0; i < this.gifts.length; i++) {
             this.gifts[i].order.product =
-              "/gifts/" + this.gifts[i].order.product;
+              "/gifts/" + this.gifts[i].order.product + "/?quantity=" + this.gifts[i].order.quantity;
           }
         })
         .catch((error) => {

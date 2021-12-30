@@ -21,6 +21,7 @@
                       type="number"
                       class="input"
                       min="1"
+                      disabled
                       v-model="quantity"
                     />
                   </div>                  
@@ -50,6 +51,7 @@ export default {
   },
   mounted() {
     this.getProduct();
+    this.quantity = this.$route.params.quantity;
     // this.getshare();
   },
   methods: {
