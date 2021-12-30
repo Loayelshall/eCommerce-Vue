@@ -7,11 +7,11 @@
         </div>
       </div>
     </div>
-    <div class="columns is-multiline">
-      <div class="tile is-parent">
+    <div class="columns is-multiline has-text-centered">
+      <div class="tile is-parent" style="flex-wrap: wrap">
         <div v-for="product in products" v-bind:key="product.id">
           <div class="" v-if="product.on_sale && product.no_of_pieces != 0">
-            <div class="tile is-12 is-vertical is-parent" style="width: 450px">
+            <div class="tile is-12 is-vertical is-parent" style="width: 445px">
               <div class="tile is-child box">
                 <h4 class="is-size-4">{{ product.name }}</h4>
                 <div class="has-text-centered m-4">
@@ -54,13 +54,13 @@
         </div>
       </div>
     </div>
-    <div class="tile is-parent">
+    <div class="tile is-parent" style="flex-wrap: wrap">
       <div class="" v-for="share in shares" v-bind:key="share.product.id">
         <div
           class=""
           v-if="share.product.on_sale && share.product.no_of_pieces != 0"
         >
-          <div class="tile is-12 is-vertical is-parent" style="width: 450px">
+          <div class="tile is-12 is-vertical is-parent" style="width: 445px">
             <div class="tile is-child box">
               <h4 class="is-size-4">{{ share.product.name }}</h4>
               <div class="has-text-centered m-4">

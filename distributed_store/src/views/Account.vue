@@ -102,7 +102,7 @@
               <div class="m-4" id="card-element"></div>
               <label>Cash Amount</label>
               <input type="text" class="input w-50 m-1" v-model="cashDeposit" />
-              <button class="button" @click="checkout()">
+              <button class="button is-dark" @click="checkout()">
                 Pay With Stripe
               </button>
             </div>
@@ -128,7 +128,7 @@
             </div>
             <div class="field">
               <div class="control">
-                <button class="button is-success">Send</button>
+                <button class="button is-info">Send</button>
               </div>
             </div>
           </form>
