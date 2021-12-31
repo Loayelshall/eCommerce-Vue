@@ -11,7 +11,7 @@
     <td>
       <div class="field has-addons">
         <p class="control">
-          <button class="button is-success" @click="incrementQuantity(item)">
+          <button class="button is-info" @click="incrementQuantity(item)">
             +
           </button>
         </p>

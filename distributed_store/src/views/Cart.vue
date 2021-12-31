@@ -39,7 +39,7 @@
 
         <hr />
         <div v-if="cartTotalLength">
-          <router-link to="/cart/checkout" class="button is-success"
+          <router-link to="/cart/checkout" class="button is-info"
             >Proceed to checkout</router-link
           >
         </div>
